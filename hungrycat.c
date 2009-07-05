@@ -37,7 +37,14 @@ static void show_error(const char *context)
 static int eat(const char *filename)
 {
 
-#define fail_if(cond) while (cond) { show_error(filename); return -1; }
+#define fail_if(cond) \
+  while (cond) \
+  { \
+    show_error(filename); \
+    if (fd != -1) \
+      close(fd); \
+    return -1; \
+  }
 
   const int fd = open(filename, O_RDWR);
   fail_if(fd == -1);
