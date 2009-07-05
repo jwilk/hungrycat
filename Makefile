@@ -3,6 +3,10 @@ CFLAGS = -std=c99 -O2 -g
 .PHONY: all
 all: hungrycat
 
+.PHONY: test
+test: hungrycat
+	./run-tests
+
 .PHONY: clean
 clean:
 	$(RM) hungrycat hungrycat.o

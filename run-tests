@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+tmpdir=`mktemp -d -t hungrycat.XXXXXX`
+base_string=abcdefghijklmnopqrstuvwxyz
+for length in `seq 0 26`
+do
+  printf $base_string | head -c $length > "$tmpdir/copy"
+  for block_size in `seq 1 32`
+  do
+    cp "$tmpdir/copy" "$tmpdir/in"
+    ./hungrycat "$tmpdir/in" > "$tmpdir/out"
+    if ! cmp "$tmpdir/out" "$tmpdir/copy"
+    then
+      printf 'Test %d/%d FAILED!\n' $length $block_size
+      exit 1
+    fi 
+  done
+done
+rm -Rf "$tmpdir"
+
+# vim:ts=2 sw=2 et
