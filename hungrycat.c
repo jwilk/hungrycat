@@ -17,24 +17,24 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-void *buffer;
-size_t block_size = BUFSIZ;
-const char *argv0;
-int opt_force = 0;
+static void *buffer;
+static size_t block_size = BUFSIZ;
+static const char *argv0;
+static int opt_force = 0;
 
-void show_usage()
+static void show_usage()
 {
   fprintf(stderr, "Usage: %s [-f] [-s BLOCK_SIZE] FILE...\n\n", argv0);
   return;
 }
 
-void show_error(const char *context)
+static void show_error(const char *context)
 {
   fprintf(stderr, "hungrycat: ");
   perror(context);
 }
 
-int eat(const char *filename)
+static int eat(const char *filename)
 {
 
 #define fail_if(cond) while (cond) { show_error(filename); return -1; }
