@@ -20,10 +20,11 @@
 void *buffer;
 size_t block_size = BUFSIZ;
 const char *argv0;
+int opt_force = 0;
 
 void show_usage()
 {
-  fprintf(stderr, "Usage: %s [-s BLOCK_SIZE] FILE...\n\n", argv0);
+  fprintf(stderr, "Usage: %s [-f] [-s BLOCK_SIZE] FILE...\n\n", argv0);
   return;
 }
 
@@ -59,6 +60,14 @@ int eat(const char *filename)
       goto done;
     w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
     fail_if(w_bytes == -1);
+  }
+
+  struct stat stat;
+  fstat(fd, &stat);
+  if (stat.st_nlink > 1 && !opt_force)
+  {
+    errno = EMLINK;
+    fail_if(1);
   }
 
   for (off_t i = 0; i < n_blocks / 2; i++)
@@ -120,10 +129,13 @@ int main(int argc, char **argv)
   argv0 = argv[0];
 
   char opt;
-  while ((opt = getopt(argc, argv, "s:")) != -1)
+  while ((opt = getopt(argc, argv, "fs:")) != -1)
   {
     switch (opt)
     {
+      case 'f':
+        opt_force = 1;
+        break;
       case 's':
       {
         char *endptr;
