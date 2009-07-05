@@ -59,14 +59,22 @@ static int eat(const char *filename)
   offset = lseek(fd, 0, SEEK_SET);
   fail_if(offset == -1);
 
-  while (n_blocks <= 2)
+  switch (n_blocks)
   {
+  case 2:
     r_bytes = read(fd, buffer, block_size);
-    fail_if(r_bytes == -1);
-    if (r_bytes == 0)
-      goto done;
+    fail_if(r_bytes != block_size);
+    w_bytes = write(STDOUT_FILENO, buffer, block_size);
+    fail_if(w_bytes != block_size);
+  case 1:
+    r_bytes = read(fd, buffer, file_size % block_size);
+    fail_if(r_bytes != file_size % block_size);
     w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-    fail_if(w_bytes == -1);
+    fail_if(w_bytes != r_bytes);
+  case 0:
+    goto done;
+  default:
+    break;
   }
 
   struct stat stat;
