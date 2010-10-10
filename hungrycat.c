@@ -168,14 +168,14 @@ int main(int argc, char **argv)
       case 's':
       {
         char *endptr;
-        unsigned long value;
+        long value;
         errno = 0;
-        value = strtoul(optarg, &endptr, 10);
+        value = strtol(optarg, &endptr, 10);
         if (errno != 0)
           ;
         else if (endptr == optarg || *endptr != '\0')
           errno = EINVAL;
-        else if (value == 0 || value > SIZE_MAX)
+        else if (value <= 0 || value >= SIZE_MAX/2)
           errno = ERANGE;
         if (errno != 0)
         {
