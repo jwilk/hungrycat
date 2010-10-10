@@ -92,7 +92,8 @@ static int eat(const char *filename)
   }
 
   struct stat stat;
-  fstat(fd, &stat);
+  rc = fstat(fd, &stat);
+  fail_if(rc == -1);
   if (stat.st_nlink > 1 && !opt_force)
   {
     errno = EMLINK;
