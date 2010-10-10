@@ -114,7 +114,7 @@ static int eat(const char *filename)
     fail_if(rc == -1);
   }
 
-  if (n_blocks & 1 == 1)
+  if ((n_blocks & 1) == 1)
   {
     r_bytes = read(fd, buffer, block_size);
     fail_if(r_bytes != block_size);
