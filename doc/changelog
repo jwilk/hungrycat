@@ -1,8 +1,9 @@
 hungrycat (0.2) UNRELEASED; urgency=low
 
   * Relicense to the Expat license.
+  * Improve error handling.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 08 Oct 2010 16:06:57 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 11 Oct 2010 01:13:35 +0200
 
 hungrycat (0.1) unstable; urgency=low
 
