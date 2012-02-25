@@ -16,6 +16,6 @@ do
     fi 
   done
 done
-rm -Rf "$tmpdir"
+rm -rf "$tmpdir"
 
 # vim:ts=2 sw=2 et

@@ -26,6 +26,6 @@ rm -rf .hg*
 rm -rf *.cache
 cd ..
 tar -czf "$pwd/$name-$version.tar.gz" */
-rm -Rf "$sourceroot"
+rm -rf "$sourceroot"
 
 # vim:ts=2 sw=2 et
