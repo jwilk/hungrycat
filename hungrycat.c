@@ -147,9 +147,7 @@ static int eat(const char *filename)
           goto done;
         }
         else
-        {
           fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftrunacate()\n", filename);
-        }
       }
       else
       {
