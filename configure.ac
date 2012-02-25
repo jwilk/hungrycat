@@ -24,6 +24,7 @@ AC_INIT(hungrycat, 0.2, jwilk@jwilk.net)
 AC_CONFIG_HEADER([config.h])
 
 AC_PROG_CC
+AC_DEFINE([_XOPEN_SOURCE], [500], [Define to the level of X/Open that your system supports])
 
 AC_SYS_LARGEFILE
 

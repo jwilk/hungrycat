@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#define _XOPEN_SOURCE 500
-
 #include <errno.h>
 #include <fcntl.h>
 #include <stdint.h>
