@@ -19,7 +19,8 @@
  * SOFTWARE.
  */
 
-#define _FILE_OFFSET_BITS 64
+#include "config.h"
+
 #define _XOPEN_SOURCE 500
 
 #include <errno.h>

@@ -19,8 +19,12 @@ then
 else
   hg clone -r "$version" "$url" "$sourceroot/$name-$version"
 fi
-cd "$sourceroot"
-rm -Rf */.hg*
+cd "$sourceroot"/*
+autoheader
+autoconf
+rm -rf .hg*
+rm -rf *.cache
+cd ..
 tar -czf "$pwd/$name-$version.tar.gz" */
 rm -Rf "$sourceroot"
 
