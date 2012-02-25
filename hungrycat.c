@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdint.h>
@@ -186,13 +187,11 @@ static int eat(const char *filename)
     fail_if(rc == -1);
   }
 
-  if (n_blocks > 0)
-  {
-    r_bytes = pread(fd, buffer, 1 + (file_size - 1) % block_size, 0);
-    fail_if(r_bytes == -1);
-    w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-    fail_if(w_bytes != r_bytes);
-  }
+  assert(n_blocks > 0);
+  r_bytes = pread(fd, buffer, 1 + (file_size - 1) % block_size, 0);
+  fail_if(r_bytes == -1);
+  w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
+  fail_if(w_bytes != r_bytes);
 
 done:
   rc = unlink(filename);
