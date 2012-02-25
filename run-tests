@@ -1,11 +1,11 @@
 #!/bin/sh
 set -e
-tmpdir=`mktemp -d -t hungrycat.XXXXXX`
+tmpdir=$(mktemp -d -t hungrycat.XXXXXX)
 base_string=abcdefghijklmnopqrstuvwxyz
-for length in `seq 0 26`
+for length in $(seq 0 26)
 do
   printf $base_string | head -c $length > "$tmpdir/copy"
-  for block_size in `seq 1 32`
+  for block_size in $(seq 1 32)
   do
     cp "$tmpdir/copy" "$tmpdir/in"
     ./hungrycat "$tmpdir/in" > "$tmpdir/out"
