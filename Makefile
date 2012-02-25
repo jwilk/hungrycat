@@ -5,7 +5,7 @@ all: hungrycat
 
 .PHONY: test
 test: hungrycat
-	./run-tests
+	./run-tests $(test_args)
 
 .PHONY: clean
 clean:
