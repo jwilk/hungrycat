@@ -147,7 +147,10 @@ done:
   rc = unlink(filename);
   fail_if(rc == -1);
   rc = close(fd);
-  fail_if(rc == -1);
+  {
+    const int fd = -1;
+    fail_if(rc == -1);
+  }
   return 0;
 
 #undef fail_if
