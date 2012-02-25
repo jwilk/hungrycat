@@ -1,4 +1,4 @@
-/* Copyright © 2009, 2010 Jakub Wilk <jwilk@jwilk.net>
+/* Copyright © 2009, 2010, 2012 Jakub Wilk <jwilk@jwilk.net>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -30,14 +30,27 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#if HAVE_FALLOC_FL_PUNCH_HOLE
+#include <linux/falloc.h>
+#endif
+
 static void *buffer;
 static size_t block_size = BUFSIZ;
 static const char *argv0;
 static int opt_force = 0;
+static int opt_punch = 0;
 
 static void show_usage()
 {
-  fprintf(stderr, "Usage: %s [-f] [-s BLOCK_SIZE] FILE...\n\n", argv0);
+  fprintf(stderr,
+    "Usage: %s "
+    "[-f] "
+#if HAVE_FALLOC_FL_PUNCH_HOLE
+    "[-P] "
+#endif
+    "[-s BLOCK_SIZE] FILE...\n\n",
+    argv0
+  );
   return;
 }
 
@@ -63,7 +76,6 @@ static int eat(const char *filename)
   fail_if(fd == -1);
   const off_t file_size = lseek(fd, 0, SEEK_END);
   fail_if(file_size == -1);
-  const off_t n_blocks = (file_size + block_size - 1) / block_size;
 
   int rc;
   off_t offset;
@@ -71,6 +83,8 @@ static int eat(const char *filename)
 
   offset = lseek(fd, 0, SEEK_SET);
   fail_if(offset == -1);
+
+  const off_t n_blocks = (file_size + block_size - 1) / block_size;
 
   switch (n_blocks)
   {
@@ -105,6 +119,44 @@ static int eat(const char *filename)
     fail_if(r_bytes != block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
     fail_if(r_bytes != block_size);
+#if HAVE_FALLOC_FL_PUNCH_HOLE
+    if (i == 0 && opt_punch)
+    {
+      rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, offset, block_size);
+      if (rc == 0)
+      {
+        blkcnt_t old_st_blocks = stat.st_blocks;
+        rc = fstat(fd, &stat);
+        fail_if(rc == -1);
+        if (stat.st_blocks < old_st_blocks)
+        {
+          offset = 0;
+          while (1)
+          {
+            r_bytes = read(fd, buffer, block_size);
+            if (r_bytes == 0)
+              break;
+            fail_if(r_bytes == -1);
+            w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
+            fail_if(w_bytes != r_bytes);
+            rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, offset, r_bytes);
+            fail_if(rc != 0);
+            offset += r_bytes;
+          }
+          goto done;
+        }
+        else
+        {
+          fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftrunacate()\n", filename);
+        }
+      }
+      else
+      {
+        show_error(filename);
+        fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftrunacate()\n", filename);
+      }
+    }
+#endif
     offset = (n_blocks - i - 1) * block_size;
     r_bytes = pread(fd, buffer, offset, (n_blocks - i - 1) * block_size);
     fail_if(r_bytes == -1);
@@ -161,7 +213,12 @@ int main(int argc, char **argv)
   argv0 = argv[0];
 
   char opt;
-  while ((opt = getopt(argc, argv, "fs:")) != -1)
+#if HAVE_FALLOC_FL_PUNCH_HOLE
+  #define punch_opt "P"
+#else
+  #define punch_opt ""
+#endif
+  while ((opt = getopt(argc, argv, "fs:" punch_opt)) != -1)
   {
     switch (opt)
     {
@@ -189,6 +246,9 @@ int main(int argc, char **argv)
         block_size = value;
         break;
       }
+      case 'P':
+        opt_punch = 1;
+        break;
       default:
         show_usage();
         return EXIT_FAILURE;
@@ -213,6 +273,7 @@ int main(int argc, char **argv)
     optind++;
   }
   return rc == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+#undef punch_opt
 }
 
 /* vim:set ts=2 sw=2 et:*/
