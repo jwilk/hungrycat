@@ -9,7 +9,7 @@ test: hungrycat
 
 .PHONY: clean
 clean:
-	$(RM) hungrycat hungrycat.o
+	rm -f hungrycat hungrycat.o
 
 hungrycat: hungrycat.o
 hungrycat.o: hungrycat.c config.h
