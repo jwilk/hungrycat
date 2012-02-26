@@ -2,8 +2,9 @@ hungrycat (0.3) UNRELEASED; urgency=low
 
   * Improve error handling.
   * Add option for using fallocate() with FALLOC_FL_PUNCH_HOLE.
+  * Fix wrong output when input file was not larger than (2 × buffer size).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sat, 25 Feb 2012 23:04:30 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 26 Feb 2012 02:13:32 +0100
 
 hungrycat (0.2) unstable; urgency=low
 

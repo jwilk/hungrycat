@@ -96,8 +96,8 @@ static int eat(const char *filename)
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
     fail_if(w_bytes != block_size);
   case 1:
-    r_bytes = read(fd, buffer, file_size % block_size);
-    fail_if(r_bytes != file_size % block_size);
+    r_bytes = read(fd, buffer, tail_size);
+    fail_if(r_bytes != tail_size);
     w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
     fail_if(w_bytes != r_bytes);
   case 0:
