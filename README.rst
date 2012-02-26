@@ -1,0 +1,36 @@
+hungrycat: cat & rm in a single tool
+====================================
+
+*hungrycat* is a tool that prints contents of a file on the standard output,
+while simultaneously freeing disk space occupied by the file.
+
+It can be useful if you need to process a large file, but:
+ - you don't have enough space to store the output file and
+ - you wouldn't need the input file afterwards.
+
+Example::
+
+   $ md5sum bigfile
+   d9b18676a36c919c1688cba61a2cf0f1  bigfile
+
+   $ ls -lh bigfile
+   -rw------- 1 jwilk users 281M Sep 13 19:46 bigfile
+
+   $ df -h .
+   Filesystem            Size  Used Avail Use% Mounted on
+   /dev/ice9             330M  284M   29M  91% /mnt/ice9
+
+   $ hungrycat bigfile | bzip2 > bigfile.bz2
+
+   $ ls -lh bigfile*
+   -rw------- 1 jwilk users 60M Sep 13 19:49 bigfile.bz2
+
+   $ df -h .
+   Filesystem            Size  Used Avail Use% Mounted on
+   /dev/ice9             330M   63M  251M  20% /mnt/ice9
+
+   $ bzcat bigfile.bz2 | md5sum
+   d9b18676a36c919c1688cba61a2cf0f1  -
+
+
+.. vim:ts=3 sw=3 et tw=76 ft=rst
