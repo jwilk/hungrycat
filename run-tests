@@ -8,7 +8,7 @@ do
   for block_size in $(seq 1 32)
   do
     cp "$tmpdir/copy" "$tmpdir/in"
-    ./hungrycat "$@" "$tmpdir/in" > "$tmpdir/out"
+    ./hungrycat -s $block_size "$@" "$tmpdir/in" > "$tmpdir/out"
     if ! cmp "$tmpdir/out" "$tmpdir/copy"
     then
       printf 'Test %d/%d FAILED!\n' $length $block_size
