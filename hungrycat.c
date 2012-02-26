@@ -86,6 +86,7 @@ static int eat(const char *filename)
   fail_if(offset == -1);
 
   const off_t n_blocks = (file_size + block_size - 1) / block_size;
+  const off_t tail_size = 1 + (file_size - 1) % block_size;
 
   switch (n_blocks)
   {
@@ -157,8 +158,8 @@ static int eat(const char *filename)
     }
 #endif
     offset = (n_blocks - i - 1) * block_size;
-    r_bytes = pread(fd, buffer, offset, (n_blocks - i - 1) * block_size);
-    fail_if(r_bytes == -1);
+    r_bytes = pread(fd, buffer, block_size, offset);
+    fail_if(r_bytes != (i == 0 ? tail_size : block_size));
     w_bytes = pwrite(fd, buffer, r_bytes, i * block_size);
     fail_if(r_bytes != w_bytes);
     rc = ftruncate(fd, offset);
@@ -186,8 +187,8 @@ static int eat(const char *filename)
   }
 
   assert(n_blocks > 0);
-  r_bytes = pread(fd, buffer, 1 + (file_size - 1) % block_size, 0);
-  fail_if(r_bytes == -1);
+  r_bytes = pread(fd, buffer, tail_size, 0);
+  fail_if(r_bytes != tail_size);
   w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
   fail_if(w_bytes != r_bytes);
 
