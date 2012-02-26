@@ -41,7 +41,7 @@ static const char *argv0;
 static int opt_force = 0;
 static int opt_punch = 0;
 
-static void show_usage()
+static void show_usage(int verbose)
 {
   fprintf(stderr,
     "Usage: %s "
@@ -52,6 +52,18 @@ static void show_usage()
     "[-s BLOCK_SIZE] FILE...\n\n",
     argv0
   );
+  if (verbose)
+  {
+    fprintf(stderr,
+      "Options:\n"
+      "  -f               force processing files with hardlinks\n"
+      "  -P               use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
+      "  -P -P            ... and do not fallback to ftruncate()\n"
+      "  -s BLOCK_SIZE    set block size to BLOCK_SIZE (default: %zu)\n"
+      "\n",
+      BUFSIZ
+    );
+  }
   return;
 }
 
@@ -248,7 +260,7 @@ int main(int argc, char **argv)
         if (errno != 0)
         {
           show_error(NULL);
-          show_usage();
+          show_usage(0);
           return EXIT_FAILURE;
         }
         block_size = value;
@@ -258,13 +270,13 @@ int main(int argc, char **argv)
         opt_punch++;
         break;
       default:
-        show_usage();
+        show_usage(0);
         return EXIT_FAILURE;
     }
   }
   if (optind >= argc)
   {
-    show_usage();
+    show_usage(1);
     return EXIT_FAILURE;
   }
   buffer = malloc(block_size);
