@@ -130,8 +130,10 @@ static int eat(const char *filename)
         blkcnt_t old_st_blocks = stat.st_blocks;
         rc = fstat(fd, &stat);
         fail_if(rc == -1);
-        if (stat.st_blocks < old_st_blocks)
+        if (opt_punch > 1 || stat.st_blocks < old_st_blocks)
         {
+          if (stat.st_blocks >= old_st_blocks)
+            fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); continuing anyway\n", filename);
           offset = 0;
           while (1)
           {
@@ -148,12 +150,20 @@ static int eat(const char *filename)
           goto done;
         }
         else
+        {
           fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftrunacate()\n", filename);
+        }
       }
       else
       {
         show_error(filename);
-        fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftrunacate()\n", filename);
+        if (opt_punch > 1)
+        {
+          fprintf(stderr, "hungrycat: %s: fallocate() failed\n", filename);
+          return 1;
+        }
+        else
+          fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftrunacate()\n", filename);
       }
     }
 #endif
@@ -245,7 +255,7 @@ int main(int argc, char **argv)
         break;
       }
       case 'P':
-        opt_punch = 1;
+        opt_punch++;
         break;
       default:
         show_usage();
