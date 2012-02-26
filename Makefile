@@ -11,6 +11,10 @@ test: hungrycat
 clean:
 	rm -f hungrycat hungrycat.o
 
+.PHONY: distclean
+distclean:
+	rm -f config.log config.status config.h
+
 hungrycat: hungrycat.o
 hungrycat.o: hungrycat.c config.h
 
