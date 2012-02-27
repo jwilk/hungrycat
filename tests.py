@@ -65,9 +65,15 @@ def _test_ftruncate(size, block_size):
     assert_equal(rc, 0)
 
 def test_ftrunacate():
-    for size in xrange(0, 26 + 1):
-        for block_size in xrange(1, 32 + 1):
+    for block_size in xrange(1, 5):
+        for size in xrange(0, block_size * 7 + 3):
             yield _test_ftruncate, size, block_size
+    for block_size in 5, 10, 100, 1000, 10000:
+        for n in xrange(0, 8):
+            for delta in -2, -1, 0, 1, 2:
+                size = n * block_size + delta
+                if size >= 0:
+                    yield _test_ftruncate, size, block_size
 
 if __name__ == '__main__':
     nose.main()
