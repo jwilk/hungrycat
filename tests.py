@@ -138,6 +138,18 @@ def test_standard_force_fallocate():
     for item in _standard_test(_standard_test_force_fallocate, min_block_size=8192):
         yield item
 
+def test_sparse_fallocate():
+    fd, input_file = mkstemp()
+    os.lseek(fd, 19999, os.SEEK_SET)
+    os.write(fd, '\0')
+    os.close(fd)
+    output, errors, rc = run_hungrycat_with_file(['-P', '-s', 8192], input_file)
+    if _errors_operation_not_supported(errors, fallback=False):
+        raise nose.SkipTest
+    assert_equal(errors, [])
+    assert_equal(rc, 0)
+    assert_equal(output, '\0' * 20000)
+
 if __name__ == '__main__':
     nose.main()
 
