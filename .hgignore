@@ -1,6 +1,7 @@
 syntax: glob
 
 *.o
+*.pyc
 autom4te.cache
 config.h
 config.h.in

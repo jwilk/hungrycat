@@ -5,7 +5,7 @@ all: hungrycat
 
 .PHONY: test
 test: hungrycat
-	./run-tests $(test_args)
+	python tests.py
 
 .PHONY: doc
 doc: doc/manpage.1
