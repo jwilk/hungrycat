@@ -37,7 +37,6 @@ def random_string(size):
 
 random_blob = random_string(1 << 17)
 
-
 def run_hungrycat(options, input_):
     fd, input_file = tempfile.mkstemp(prefix='hungrycat')
     os.write(fd, input_)
