@@ -7,4 +7,6 @@ config.h.in
 config.log
 config.status
 configure
+doc/manpage.1
+doc/manpage.rst
 hungrycat

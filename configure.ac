@@ -48,6 +48,18 @@ AC_TRY_CPP(
 
 AC_SYS_LARGEFILE
 
+AC_MSG_CHECKING([for BUFSIZ])
+bufsiz=$(printf '#include <stdio.h>\nBUFSIZ' | $CPP - | tail -n 1 | grep '^[0-9][0-9]*$')
+if test -n "$bufsiz"
+then
+    AC_MSG_RESULT([unknown])
+    AC_SUBST([BUFSIZ], ["*BUFSIZ*"])
+else
+    AC_MSG_RESULT([$bufsiz])
+    AC_SUBST([BUFSIZ], ["$bufsiz"])
+fi
+
+AC_CONFIG_FILES([doc/manpage.rst])
 AC_OUTPUT
 
 dnl vim: ts=4 sw=4 et

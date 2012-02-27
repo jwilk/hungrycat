@@ -1,0 +1,43 @@
+=========
+hungrycat
+=========
+
+cat & rm in a single tool
+=========================
+
+:Author: Jakub Wilk <jwilk@jwilk.net>
+:Date: 2012-02-27
+:Manual section: 1
+
+Synoposis
+---------
+
+**hungrycat** [-f] [-P] [-s *BLOCK_SIZE*] *FILE*...
+
+Description
+-----------
+**hungrycat** is a tool that prints contents of a file on the standard output,
+while simultaneously freeing disk space occupied by the file.
+
+It can be useful if you need to process a large file, but:
+
+- you don't have enough space to store the output file and
+- you wouldn't need the input file afterwards.
+
+Options
+-------
+
+-f               Force processing even if the file has multiple links.
+
+-P               Use fallocate() with FALLOC_FL_PUNCH_HOLE, instead of
+                 shuffling the file contents and using ftruncate(). This is
+                 slower, but might ease file recovery if the program was
+                 interrupted in the middle of processing.
+
+                 If the fallocate() system call is not supported by the
+                 underlying filesystem, or if the block size is too small for
+                 fallocate() to actually free space, the program will fall back
+                 to the “classic” implementation. You can disable the fall-back
+                 behavior by specifying the option twice.
+
+-s BLOCK_SIZE    Set block size to *BLOCK_SIZE* (default: @BUFSIZ@).

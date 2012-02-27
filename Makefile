@@ -7,6 +7,9 @@ all: hungrycat
 test: hungrycat
 	./run-tests $(test_args)
 
+.PHONY: doc
+doc: doc/manpage.1
+
 .PHONY: clean
 clean:
 	rm -f hungrycat hungrycat.o
@@ -17,5 +20,8 @@ distclean:
 
 hungrycat: hungrycat.o
 hungrycat.o: hungrycat.c config.h
+
+%.1: %.rst
+	rst2man $(<) $(@)
 
 # vim:ts=4 sw=4 noet
