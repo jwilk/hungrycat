@@ -163,7 +163,7 @@ static int eat(const char *filename)
         }
         else
         {
-          fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftrunacate()\n", filename);
+          fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftruncate()\n", filename);
         }
       }
       else
@@ -175,7 +175,7 @@ static int eat(const char *filename)
           return 1;
         }
         else
-          fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftrunacate()\n", filename);
+          fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftruncate()\n", filename);
       }
     }
 #endif
