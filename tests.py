@@ -37,10 +37,10 @@ def random_string(size):
 
 random_blob = random_string(1 << 17)
 
-def run_hungrycat(options, input_):
-    fd, input_file = tempfile.mkstemp(prefix='hungrycat')
-    os.write(fd, input_)
-    os.close(fd)
+def mkstemp():
+    return tempfile.mkstemp(prefix='hungrycat.', suffix='.tmp')
+
+def run_hungrycat_with_file(options, input_file):
     child = ipc.Popen(
         ['./hungrycat'] + map(str, options) + [input_file],
         stdout=ipc.PIPE,
@@ -55,6 +55,12 @@ def run_hungrycat(options, input_):
         if os.path.exists(input_file):
             os.unlink(input_file)
     return output, errors, rc
+
+def run_hungrycat(options, input_):
+    fd, input_file = mkstemp()
+    os.write(fd, input_)
+    os.close(fd)
+    return run_hungrycat_with_file(options, input_file)
 
 def _standard_test_ftruncate(size, block_size):
     input_ = random_blob[:size]
