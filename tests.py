@@ -143,7 +143,7 @@ def test_sparse_fallocate():
     os.lseek(fd, 19999, os.SEEK_SET)
     os.write(fd, '\0')
     os.close(fd)
-    output, errors, rc = run_hungrycat_with_file(['-P', '-s', 8192], input_file)
+    output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], input_file)
     if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
     assert_equal(errors, [])
