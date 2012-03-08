@@ -154,32 +154,20 @@ static int eat(const char *filename)
       rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, offset, block_size);
       if (rc == 0)
       {
-        blkcnt_t old_st_blocks = stat.st_blocks;
-        rc = fstat(fd, &stat);
-        fail_if(rc == -1);
-        if (opt_punch > 1 || stat.st_blocks < old_st_blocks)
+        offset = 0;
+        while (1)
         {
-          if (stat.st_blocks >= old_st_blocks)
-            fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); continuing anyway\n", filename);
-          offset = 0;
-          while (1)
-          {
-            r_bytes = read(fd, buffer, block_size);
-            if (r_bytes == 0)
-              break;
-            fail_if(r_bytes == -1);
-            w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-            fail_if(w_bytes != r_bytes);
-            rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, offset, r_bytes);
-            fail_if(rc != 0);
-            offset += r_bytes;
-          }
-          goto done;
+          r_bytes = read(fd, buffer, block_size);
+          if (r_bytes == 0)
+            break;
+          offset += r_bytes;
+          fail_if(r_bytes == -1);
+          w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
+          fail_if(w_bytes != r_bytes);
+          rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0, offset);
+          fail_if(rc != 0);
         }
-        else
-        {
-          fprintf(stderr, "hungrycat: %s: buffer size too small for fallocate(); falling back to ftruncate()\n", filename);
-        }
+        goto done;
       }
       else
       {

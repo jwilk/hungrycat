@@ -70,13 +70,6 @@ def _standard_test_ftruncate(size, block_size):
     assert_equal(rc, 0)
     assert_equal(output, input_)
 
-def _errors_buffer_to_small(errors):
-    try:
-        [message] = errors
-    except ValueError:
-        return
-    return message.endswith(': buffer size too small for fallocate(); falling back to ftruncate()')
-
 def _errors_operation_not_supported(errors, fallback):
     try:
         message_notsupp, message_fallback = errors
@@ -90,9 +83,7 @@ def _errors_operation_not_supported(errors, fallback):
 def _standard_test_fallocate(size, block_size):
     input_ = random_blob[:size]
     output, errors, rc = run_hungrycat(['-s', block_size, '-P'], input_)
-    if _errors_buffer_to_small(errors):
-        pass
-    elif _errors_operation_not_supported(errors, fallback=True):
+    if _errors_operation_not_supported(errors, fallback=True):
         pass
     else:
         assert_equal(errors, [])
@@ -102,9 +93,7 @@ def _standard_test_fallocate(size, block_size):
 def _standard_test_force_fallocate(size, block_size):
     input_ = random_blob[:size]
     output, errors, rc = run_hungrycat(['-s', block_size, '-P', '-P'], input_)
-    if _errors_buffer_to_small(errors):
-        raise nose.SkipTest
-    elif _errors_operation_not_supported(errors, fallback=False):
+    if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
     else:
         assert_equal(errors, [])
