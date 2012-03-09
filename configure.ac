@@ -50,7 +50,7 @@ AC_SYS_LARGEFILE
 
 AC_MSG_CHECKING([for BUFSIZ])
 bufsiz=$(printf '#include <stdio.h>\nBUFSIZ' | $CPP - | tail -n 1 | grep '^[0-9][0-9]*$')
-if test -n "$bufsiz"
+if test -z "$bufsiz"
 then
     AC_MSG_RESULT([unknown])
     AC_SUBST([BUFSIZ], ["*BUFSIZ*"])
