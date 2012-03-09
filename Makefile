@@ -1,4 +1,5 @@
-CFLAGS = -std=c99 -O2 -g -Wall
+CFLAGS ?= -g -O2
+CFLAGS += -std=c99 -Wall
 
 .PHONY: all
 all: hungrycat
