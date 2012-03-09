@@ -30,9 +30,9 @@ Options
 -f               Force processing even if the file has multiple links.
 
 -P               Use fallocate() with FALLOC_FL_PUNCH_HOLE, instead of
-                 shuffling the file contents and using ftruncate(). This is
-                 slower, but might ease file recovery if the program was
-                 interrupted in the middle of processing.
+                 shuffling the file contents and using ftruncate(). This might
+                 ease file recovery if the program was interrupted in the
+                 middle of processing.
 
                  If the fallocate() system call is not supported by the
                  underlying filesystem the program will fall back to the
