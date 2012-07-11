@@ -23,7 +23,6 @@ cd "$sourceroot"/*
 "$pwd"/tools/autogen
 rm -rf .hg*
 rm -rf *.cache
-rm -rf tools/
 mv "$(readlink -f doc/README)" doc/README
 cd ..
 tar -czf "$pwd/$name-$version.tar.gz" */
