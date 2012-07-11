@@ -1,5 +1,7 @@
-CFLAGS ?= -g -O2
-CFLAGS += -std=c99 -Wall
+CC = @CC@
+CFLAGS = @CFLAGS@
+CPPFALGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
 
 .PHONY: all
 all: hungrycat
