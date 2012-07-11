@@ -27,20 +27,17 @@ AC_PROG_CC
 AC_PROG_CPP
 
 AC_MSG_CHECKING([for FALLOC_FL_PUNCH_HOLE])
-AC_TRY_CPP(
-    [
+AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
         #define _GNU_SOURCE 1
         #include <linux/falloc.h>
         #ifndef FALLOC_FL_PUNCH_HOLE
         #error FALLOC_FL_PUNCH_HOLE is missing
         #endif
-    ],
-    [
+    ]])], [
         AC_MSG_RESULT([yes])
         AC_DEFINE([HAVE_FALLOC_FL_PUNCH_HOLE], [1], [Define if FALLOC_FL_PUNCH_HOLE is available.])
         AC_DEFINE([_GNU_SOURCE], [1], [Define to enable GNU extensions on systems that have them.])
-    ],
-    [
+    ], [
         AC_MSG_RESULT([no])
         AC_DEFINE([_XOPEN_SOURCE], [500], [Define to the level of X/Open that your system supports.])
     ]
