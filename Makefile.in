@@ -5,6 +5,12 @@ LDFLAGS = @LDFLAGS@
 
 RST2MAN = @RST2MAN@
 
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+datarootdir = @datarootdir@
+mandir = @mandir@
+
 .PHONY: all
 all: hungrycat
 
@@ -20,15 +26,26 @@ clean:
 distclean:
 	rm -f config.log config.status config.h
 
+.PHONY: install
+install: hungrycat
+	install -D -m755 -o root -g root $(<) $(DESTDIR)$(bindir)/hungrycat
+
 hungrycat: hungrycat.o
 hungrycat.o: hungrycat.c config.h
 
 ifneq "$(RST2MAN)" ""
 
+manpage = doc/manpage.1
+
 all: doc
+install: install-doc
 
 .PHONY: doc
-doc: doc/manpage.1
+doc: $(manpage)
+
+.PHONY: install-doc
+install-doc: $(manpage)
+	install -D -m644 -o root -g root $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
 
 %.1: %.rst
 	@RST2MAN@ $(<) $(@)
