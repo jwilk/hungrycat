@@ -2,6 +2,8 @@ syntax: glob
 
 *.o
 *.pyc
+Makefile
+aclocal.m4
 autom4te.cache
 config.h
 config.h.in
@@ -11,3 +13,4 @@ configure
 doc/manpage.1
 doc/manpage.rst
 hungrycat
+m4/*.m4
