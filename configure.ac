@@ -57,6 +57,8 @@ else
     AC_SUBST([BUFSIZ], ["$bufsiz"])
 fi
 
+AC_CHECK_TOOLS([RST2MAN], [rst2man.py rst2man])
+
 AC_CONFIG_FILES([Makefile doc/manpage.rst])
 AC_OUTPUT
 

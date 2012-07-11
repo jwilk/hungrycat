@@ -3,15 +3,14 @@ CFLAGS = @CFLAGS@
 CPPFALGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 
+RST2MAN = @RST2MAN@
+
 .PHONY: all
 all: hungrycat
 
 .PHONY: test
 test: hungrycat
 	python tests.py
-
-.PHONY: doc
-doc: doc/manpage.1
 
 .PHONY: clean
 clean:
@@ -24,7 +23,16 @@ distclean:
 hungrycat: hungrycat.o
 hungrycat.o: hungrycat.c config.h
 
+ifneq "$(RST2MAN)" ""
+
+all: doc
+
+.PHONY: doc
+doc: doc/manpage.1
+
 %.1: %.rst
-	rst2man $(<) $(@)
+	@RST2MAN@ $(<) $(@)
+
+endif
 
 # vim:ts=4 sw=4 noet
