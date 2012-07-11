@@ -20,8 +20,7 @@ else
   hg clone -r "$version" "$url" "$sourceroot/$name-$version"
 fi
 cd "$sourceroot"/*
-autoheader
-autoconf
+"$pwd"/tools/autogen
 rm -rf .hg*
 rm -rf *.cache
 rm -rf tools/
