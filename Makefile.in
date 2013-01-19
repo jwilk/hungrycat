@@ -23,7 +23,7 @@ clean:
 	rm -f hungrycat hungrycat.o
 
 .PHONY: distclean
-distclean:
+distclean: clean
 	rm -f config.log config.status config.h
 
 .PHONY: install
