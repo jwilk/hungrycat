@@ -20,7 +20,7 @@ else
   hg clone -r "$version" "$url" "$sourceroot/$name-$version"
 fi
 cd "$sourceroot"/*
-tools/autogen
+"$pwd/private/autogen"
 rm -rf .hg*
 rm -rf *.cache
 mv "$(readlink -f doc/README)" doc/README
