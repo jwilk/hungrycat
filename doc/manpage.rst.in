@@ -28,14 +28,18 @@ Options
 
 -f               Force processing even if the file has multiple links.
 
--P               Use fallocate() with FALLOC_FL_PUNCH_HOLE, instead of
-                 shuffling the file contents and using ftruncate(). This might
-                 ease file recovery if the program was interrupted in the
+-P               Use **fallocate**\(2) with FALLOC_FL_PUNCH_HOLE, instead of
+                 shuffling the file contents and using **ftruncate**\(2). This
+                 might ease file recovery if the program was interrupted in the
                  middle of processing.
 
-                 If the fallocate() system call is not supported by the
+                 If the **fallocate**\(2) system call is not supported by the
                  underlying filesystem the program will fall back to the
                  “classic” implementation. You can disable the fall-back
                  behavior by specifying the option twice.
 
 -s BLOCK_SIZE    Set block size to *BLOCK_SIZE* (default: @BUFSIZ@).
+
+See also
+--------
+**cat**\(1), **rm**\(1), **truncate**\(1)
