@@ -24,7 +24,8 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	rm -f config.log config.status config.h
+	rm -f config.log config.status
+	find . -name '*.in' | sed -e 's/[.]in$$//' | xargs -t rm -f
 
 .PHONY: install
 install: hungrycat
@@ -38,6 +39,7 @@ ifneq "$(RST2MAN)" ""
 manpage = doc/manpage.1
 
 all: doc
+clean: clean-doc
 install: install-doc
 
 .PHONY: doc
@@ -46,6 +48,10 @@ doc: $(manpage)
 .PHONY: install-doc
 install-doc: $(manpage)
 	install -D -m644 $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
+
+.PHONY: clean-doc
+clean-doc:
+	rm -f $(manpage)
 
 %.1: %.rst
 	@RST2MAN@ $(<) $(@)
