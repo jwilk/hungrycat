@@ -1,4 +1,4 @@
-hungrycat (0.3.1) UNRELEASED; urgency=low
+hungrycat (0.3.1) unstable; urgency=low
 
   * Improve the build system:
     + Fix “make clean” and “make distclean” to remove all the files they
@@ -15,7 +15,7 @@ hungrycat (0.3.1) UNRELEASED; urgency=low
   * Fix a type mismatch on 64-bit architectures.
   * Make the test runner compatible with Python 3.X.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Jun 2013 23:52:16 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Jun 2013 23:59:32 +0200
 
 hungrycat (0.3) unstable; urgency=low
 
