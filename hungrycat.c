@@ -61,7 +61,7 @@ static void show_usage(int verbose)
       "  -P -P            ... and do not fallback to ftruncate()\n"
       "  -s BLOCK_SIZE    set block size to BLOCK_SIZE (default: %zu)\n"
       "\n",
-      BUFSIZ
+      (size_t) BUFSIZ
     );
   }
   return;

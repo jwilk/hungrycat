@@ -5,8 +5,9 @@ hungrycat (0.3.1) UNRELEASED; urgency=low
     - Remove the “AUTHOR” section.
     - Add references to cat(1), rm(1), truncate(1), ftruncate(2), and
       fallocate(2) manpages.
+  * Fix a type mismatch on 64-bit architectures.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 05 Feb 2013 12:51:34 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Jun 2013 18:36:47 +0200
 
 hungrycat (0.3) unstable; urgency=low
 
