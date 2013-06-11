@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # encoding=UTF-8
 
-# Copyright © 2012 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2012, 2013 Jakub Wilk <jwilk@jwilk.net>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -24,16 +24,27 @@
 import os
 import random
 import subprocess as ipc
+import sys
 import tempfile
 
 import nose
 from nose.tools import *
 
-def random_string(size):
-    return ''.join(
-        chr(random.randint(0, 0xff))
-        for i in xrange(0, size)
-    )
+if sys.version_info >= (3,):
+    null_byte = bytes([0])
+    def random_string(size):
+        return bytes(
+            random.randint(0, 0xff)
+            for i in range(0, size)
+        )
+else:
+    null_byte = '\0'
+    range = xrange
+    def random_string(size):
+        return ''.join(
+            chr(random.randint(0, 0xff))
+            for i in range(0, size)
+        )
 
 random_blob = random_string(1 << 17)
 
@@ -42,7 +53,7 @@ def mkstemp():
 
 def run_hungrycat_with_file(options, input_file):
     child = ipc.Popen(
-        ['./hungrycat'] + map(str, options) + [input_file],
+        ['./hungrycat'] + [str(o) for o in options] + [input_file],
         stdout=ipc.PIPE,
         stderr=ipc.PIPE,
     )
@@ -101,15 +112,15 @@ def _standard_test_force_fallocate(size, block_size):
     assert_equal(output, input_)
 
 def _standard_test(testfn, min_block_size=1):
-    for block_size in xrange(1, 5):
+    for block_size in range(1, 5):
         if block_size < min_block_size:
             continue
-        for size in xrange(0, block_size * 7 + 3):
+        for size in range(0, block_size * 7 + 3):
             yield testfn, size, block_size
     for block_size in 5, 10, 100, 1000, 10000:
         if block_size < min_block_size:
             continue
-        for n in xrange(0, 8):
+        for n in range(0, 8):
             for delta in -2, -1, 0, 1, 2:
                 size = n * block_size + delta
                 if size >= 0:
@@ -130,14 +141,14 @@ def test_standard_force_fallocate():
 def test_sparse_fallocate():
     fd, input_file = mkstemp()
     os.lseek(fd, 19999, os.SEEK_SET)
-    os.write(fd, '\0')
+    os.write(fd, null_byte)
     os.close(fd)
     output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], input_file)
     if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
     assert_equal(errors, [])
     assert_equal(rc, 0)
-    assert_equal(output, '\0' * 20000)
+    assert_equal(output, null_byte * 20000)
 
 if __name__ == '__main__':
     nose.main()

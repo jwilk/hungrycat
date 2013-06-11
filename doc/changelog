@@ -6,8 +6,9 @@ hungrycat (0.3.1) UNRELEASED; urgency=low
     - Add references to cat(1), rm(1), truncate(1), ftruncate(2), and
       fallocate(2) manpages.
   * Fix a type mismatch on 64-bit architectures.
+  * Make the test runner compatible with Python 3.X.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Jun 2013 18:36:47 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Tue, 11 Jun 2013 18:46:09 +0200
 
 hungrycat (0.3) unstable; urgency=low
 
