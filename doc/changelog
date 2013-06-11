@@ -1,6 +1,13 @@
 hungrycat (0.3.1) UNRELEASED; urgency=low
 
-  * Fix “make clean” and “make distclean” to remove all the files they should.
+  * Improve the build system:
+    + Fix “make clean” and “make distclean” to remove all the files they
+      should.
+    + Add “install” target to the makefile.
+    + Build documentation only if rst2man is available.
+    + Enable C99 compatibility more portably.
+    + Enable warnings more portably.
+    + Port the configure script to Autoconf ≥ 2.61.
   * Improve the manual page, as per man-pages(7) recommendations:
     - Remove the “AUTHOR” section.
     - Add references to cat(1), rm(1), truncate(1), ftruncate(2), and
