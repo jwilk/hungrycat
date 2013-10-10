@@ -21,6 +21,7 @@ test: hungrycat
 .PHONY: clean
 clean:
 	rm -f hungrycat hungrycat.o
+	rm -rf *.py[co] __pycache__
 
 .PHONY: distclean
 distclean: clean
