@@ -147,7 +147,7 @@ static int eat(const char *filename)
     r_bytes = read(fd, buffer, block_size);
     fail_if(r_bytes != block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(r_bytes != block_size);
+    fail_if(w_bytes != block_size);
 #if HAVE_FALLOC_FL_PUNCH_HOLE
     if (i == 0 && opt_punch)
     {
@@ -196,7 +196,7 @@ static int eat(const char *filename)
     r_bytes = read(fd, buffer, block_size);
     fail_if(r_bytes != block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(r_bytes != block_size);
+    fail_if(w_bytes != block_size);
     rc = ftruncate(fd, (n_blocks / 2) * block_size);
     fail_if(rc == -1);
   }

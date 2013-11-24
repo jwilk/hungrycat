@@ -1,5 +1,6 @@
 hungrycat (0.3.2) UNRELEASED; urgency=low
 
+  * Improve error handling.
   * Improve the build system:
     + Fix “make clean” and “make distclean” to remove *.pyc/*.pyo files.
 
