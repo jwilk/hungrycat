@@ -1,10 +1,10 @@
-hungrycat (0.3.2) UNRELEASED; urgency=low
+hungrycat (0.3.2) unstable; urgency=low
 
   * Improve error handling.
   * Improve the build system:
     + Fix “make clean” and “make distclean” to remove *.pyc/*.pyo files.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 10 Oct 2013 14:47:02 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 25 Nov 2013 08:25:32 +0100
 
 hungrycat (0.3.1) unstable; urgency=low
 
