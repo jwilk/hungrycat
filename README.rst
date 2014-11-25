@@ -5,8 +5,9 @@ hungrycat: cat & rm in a single tool
 while simultaneously freeing disk space occupied by the file.
 
 It can be useful if you need to process a large file, but:
- - you don't have enough space to store the output file and
- - you wouldn't need the input file afterwards.
+
+- you don't have enough space to store the output file and
+- you wouldn't need the input file afterwards.
 
 Example::
 
