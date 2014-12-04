@@ -15,22 +15,22 @@ Example::
    d9b18676a36c919c1688cba61a2cf0f1  bigfile
 
    $ ls -lh bigfile
-   -rw------- 1 jwilk users 281M Sep 13 19:46 bigfile
+   -rw-r--r-- 1 jwilk users 281M Sep 13 19:46 bigfile
 
    $ df -h .
    Filesystem            Size  Used Avail Use% Mounted on
    /dev/ice9             330M  284M   29M  91% /mnt/ice9
 
-   $ hungrycat bigfile | bzip2 > bigfile.bz2
+   $ hungrycat bigfile | xz > bigfile.xz
 
    $ ls -lh bigfile*
-   -rw------- 1 jwilk users 60M Sep 13 19:49 bigfile.bz2
+   -rw-r--r-- 1 jwilk users 60M Sep 13 19:49 bigfile.xz
 
    $ df -h .
    Filesystem            Size  Used Avail Use% Mounted on
    /dev/ice9             330M   63M  251M  20% /mnt/ice9
 
-   $ bzcat bigfile.bz2 | md5sum
+   $ xz -d < bigfile.xz | md5sum
    d9b18676a36c919c1688cba61a2cf0f1  -
 
 
