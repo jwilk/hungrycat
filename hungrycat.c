@@ -68,7 +68,9 @@ static void show_usage(int verbose)
 
 static void show_error(const char *context)
 {
+  int orig_errno = errno;
   fprintf(stderr, "hungrycat: ");
+  errno = orig_errno;
   perror(context);
 }
 
