@@ -84,6 +84,14 @@ static int eat(const char *filename)
     return -1; \
   }
 
+#define check_io(i, j) \
+  while ((i) != (j)) \
+  { \
+    if ((i) >= 0) \
+      errno = EIO; \
+    fail_if(1); \
+  }
+
   const int fd = open(filename, O_RDWR);
   fail_if(fd == -1);
   const off_t file_size = lseek(fd, 0, SEEK_END);
@@ -103,14 +111,14 @@ static int eat(const char *filename)
   {
   case 2:
     r_bytes = read(fd, buffer, block_size);
-    fail_if(r_bytes != block_size);
+    check_io(r_bytes, block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(w_bytes != block_size);
+    check_io(w_bytes, block_size);
   case 1:
     r_bytes = read(fd, buffer, tail_size);
-    fail_if(r_bytes != tail_size);
+    check_io(r_bytes, tail_size);
     w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-    fail_if(w_bytes != r_bytes);
+    check_io(w_bytes, r_bytes);
   case 0:
     goto done;
   default:
@@ -125,11 +133,11 @@ static int eat(const char *filename)
      * size too small” condition. */
     char charbuf;
     r_bytes = pread(fd, &charbuf, 1, 0);
-    fail_if(r_bytes != 1);
+    check_io(r_bytes, 1);
     if (charbuf == 0)
     {
       w_bytes = pwrite(fd, &charbuf, 1, 0);
-      fail_if(w_bytes != 1);
+      check_io(w_bytes, 1);
     }
   }
 #endif
@@ -144,9 +152,9 @@ static int eat(const char *filename)
   for (off_t i = 0; i < n_blocks / 2; i++)
   {
     r_bytes = read(fd, buffer, block_size);
-    fail_if(r_bytes != block_size);
+    check_io(r_bytes, block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(w_bytes != block_size);
+    check_io(w_bytes, block_size);
 #if HAVE_FALLOC_FL_PUNCH_HOLE
     if (i == 0 && opt_punch)
     {
@@ -162,7 +170,7 @@ static int eat(const char *filename)
           offset += r_bytes;
           fail_if(r_bytes == -1);
           w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-          fail_if(w_bytes != r_bytes);
+          check_io(w_bytes, r_bytes);
           rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, 0, offset);
           fail_if(rc != 0);
         }
@@ -183,9 +191,9 @@ static int eat(const char *filename)
 #endif
     offset = (n_blocks - i - 1) * block_size;
     r_bytes = pread(fd, buffer, block_size, offset);
-    fail_if(r_bytes != (i == 0 ? tail_size : block_size));
+    check_io(r_bytes, (i == 0 ? tail_size : block_size));
     w_bytes = pwrite(fd, buffer, r_bytes, i * block_size);
-    fail_if(r_bytes != w_bytes);
+    check_io(r_bytes, w_bytes);
     rc = ftruncate(fd, offset);
     fail_if(rc == -1);
   }
@@ -193,9 +201,9 @@ static int eat(const char *filename)
   if ((n_blocks & 1) == 1)
   {
     r_bytes = read(fd, buffer, block_size);
-    fail_if(r_bytes != block_size);
+    check_io(r_bytes, block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(w_bytes != block_size);
+    check_io(w_bytes, block_size);
     rc = ftruncate(fd, (n_blocks / 2) * block_size);
     fail_if(rc == -1);
   }
@@ -203,18 +211,18 @@ static int eat(const char *filename)
   for (off_t i = (n_blocks / 2) - 1; i > 0; i--)
   {
     r_bytes = pread(fd, buffer, block_size, i * block_size);
-    fail_if(r_bytes != block_size);
+    check_io(r_bytes, block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
-    fail_if(w_bytes != block_size);
+    check_io(w_bytes, block_size);
     rc = ftruncate(fd, i * block_size);
     fail_if(rc == -1);
   }
 
   assert(n_blocks > 0);
   r_bytes = pread(fd, buffer, tail_size, 0);
-  fail_if(r_bytes != tail_size);
+  check_io(r_bytes, tail_size);
   w_bytes = write(STDOUT_FILENO, buffer, r_bytes);
-  fail_if(w_bytes != r_bytes);
+  check_io(w_bytes, r_bytes);
 
 done:
   rc = unlink(filename);

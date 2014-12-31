@@ -1,8 +1,8 @@
 hungrycat (0.3.3) UNRELEASED; urgency=low
 
-  * 
+  * Improve error handling.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 21 Mar 2014 12:10:48 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Wed, 31 Dec 2014 23:37:01 +0100
 
 hungrycat (0.3.2) unstable; urgency=low
 
