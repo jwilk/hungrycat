@@ -1,9 +1,9 @@
-hungrycat (0.3.3) UNRELEASED; urgency=low
+hungrycat (0.3.3) unstable; urgency=low
 
   * Improve error handling.
   * Fix file descriptor leak when the -PP option was enabled.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 31 Dec 2014 23:46:36 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 01 Jan 2015 00:02:12 +0100
 
 hungrycat (0.3.2) unstable; urgency=low
 
