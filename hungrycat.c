@@ -182,6 +182,7 @@ static int eat(const char *filename)
         if (opt_punch > 1)
         {
           fprintf(stderr, "hungrycat: %s: fallocate() failed\n", filename);
+          close(fd);
           return 1;
         }
         else
