@@ -1,0 +1,12 @@
+language: c
+compiler:
+ - clang
+ - gcc
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -y automake autoconf autoconf-archive python-nose
+script:
+ - ./private/autogen
+ - ./configure
+ - make
+ - make test
