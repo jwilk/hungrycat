@@ -34,4 +34,4 @@ Example::
    d9b18676a36c919c1688cba61a2cf0f1  -
 
 
-.. vim:ts=3 sw=3 et tw=76 ft=rst
+.. vim:ts=3 sts=3 sw=3 et tw=76
