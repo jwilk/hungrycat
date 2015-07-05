@@ -5,10 +5,12 @@ compiler:
 before_install:
 - sudo apt-get update
 - sudo apt-get install --no-install-recommends automake autoconf autoconf-archive python-nose
+- sudo apt-get install --no-install-recommends python-docutils
 script:
 - ./private/autogen
 - ./configure
 - make
 - make test
+- find -name "*.rst" | xargs -L1 -t -I{} rst2xml --strict {} /dev/null
 
 # vim:ts=2 sts=2 sw=2 et
