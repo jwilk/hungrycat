@@ -8,14 +8,13 @@ addons:
     - autoconf
     - autoconf-archive
     - automake
+    - python-docutils
     - python-nose
-install:
-- pip install --user docutils
 script:
 - ./private/autogen
 - ./configure
 - make
 - make test
-- find -name "*.rst" | xargs -L1 -t -I{} ~/.local/bin/rst2xml.py --strict {} /dev/null
+- find -name "*.rst" | xargs -L1 -t -I{} rst2xml --strict {} /dev/null
 
 # vim:ts=2 sts=2 sw=2 et
