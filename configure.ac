@@ -20,7 +20,7 @@ dnl | TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 dnl | SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 AC_PREREQ([2.61])
-AC_INIT([hungrycat], [0.3.3], [jwilk@jwilk.net])
+AC_INIT([hungrycat], [0.3.4], [jwilk@jwilk.net])
 AC_CONFIG_HEADER([config.h])
 
 AC_PROG_CC_C99
