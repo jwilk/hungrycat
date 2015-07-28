@@ -48,7 +48,7 @@ hg archive -r "$revision" "$sourceroot/$name-$version"
 cd "$sourceroot"/*
 "$pwd/private/autogen"
 rm -rf .hg*
-rm -f .travis*
+rm -f .travis.yml
 rm -rf *.cache
 mv "$(readlink -f doc/README)" doc/README
 cd ..
