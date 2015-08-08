@@ -28,7 +28,10 @@ import sys
 import tempfile
 
 import nose
-from nose.tools import *
+from nose.tools import (
+    assert_equal,
+    assert_false,
+)
 
 if sys.version_info >= (3,):
     null_byte = bytes([0])
