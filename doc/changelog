@@ -1,8 +1,9 @@
 hungrycat (0.4) UNRELEASED; urgency=low
 
-  * 
+  * Use fstatvfs(2) to determine the default block size (instead of using
+    BUFSIZE, which was always a dubious guess).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 13 Mar 2016 18:38:00 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sun, 13 Mar 2016 18:38:52 +0100
 
 hungrycat (0.3.3) unstable; urgency=low
 

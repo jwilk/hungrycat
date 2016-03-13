@@ -46,20 +46,8 @@ AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 
 AC_SYS_LARGEFILE
 
-AC_MSG_CHECKING([for BUFSIZ])
-bufsiz=$(printf '#include <stdio.h>\nBUFSIZ' | $CPP - | tail -n 1 | grep '^[0-9][0-9]*$')
-if test -z "$bufsiz"
-then
-    AC_MSG_RESULT([unknown])
-    AC_SUBST([BUFSIZ], ["*BUFSIZ*"])
-else
-    AC_MSG_RESULT([$bufsiz])
-    AC_SUBST([BUFSIZ], ["$bufsiz"])
-fi
-
 AC_CHECK_TOOLS([RST2MAN], [rst2man.py rst2man])
 
-AC_CONFIG_FILES([Makefile doc/manpage.rst])
 AC_OUTPUT
 
 dnl vim:ts=4 sts=4 sw=4 et

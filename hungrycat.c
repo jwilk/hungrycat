@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/statvfs.h>
 #include <unistd.h>
 
 #if HAVE_FALLOC_FL_PUNCH_HOLE
@@ -35,7 +36,8 @@
 #endif
 
 static void *buffer;
-static size_t block_size = BUFSIZ;
+static size_t block_size = 0;
+static const size_t block_size_limit = SIZE_MAX / 2;
 static const char *argv0;
 static int opt_force = 0;
 static int opt_punch = 0;
@@ -58,9 +60,8 @@ static void show_usage(int verbose)
       "  -f               force processing files with hardlinks\n"
       "  -P               use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
       "  -P -P            ... and do not fallback to ftruncate()\n"
-      "  -s BLOCK_SIZE    set block size to BLOCK_SIZE (default: %zu)\n"
-      "\n",
-      (size_t) BUFSIZ
+      "  -s BLOCK_SIZE    set block size to BLOCK_SIZE\n"
+      "\n"
     );
   }
   return;
@@ -105,6 +106,19 @@ static int eat(const char *filename)
 
   offset = lseek(fd, 0, SEEK_SET);
   fail_if(offset == -1);
+
+  if (block_size == 0)
+  {
+    struct statvfs st;
+    rc = fstatvfs(fd, &st);
+    fail_if(rc == -1);
+    if (st.f_bsize == 0 || st.f_bsize >= block_size_limit)
+    {
+      errno = ERANGE;
+      fail_if(1);
+    }
+    block_size = st.f_bsize;
+  }
 
   const off_t n_blocks = (file_size + block_size - 1) / block_size;
   const off_t tail_size = 1 + (file_size - 1) % block_size;
@@ -268,7 +282,7 @@ int main(int argc, char **argv)
           ;
         else if (endptr == optarg || *endptr != '\0')
           errno = EINVAL;
-        else if (value <= 0 || value >= SIZE_MAX/2)
+        else if (value <= 0 || value >= block_size_limit)
           errno = ERANGE;
         if (errno != 0)
         {

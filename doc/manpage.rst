@@ -38,7 +38,8 @@ Options
                  “classic” implementation. You can disable the fall-back
                  behavior by specifying the option twice.
 
--s BLOCK_SIZE    Set block size to *BLOCK_SIZE* (default: @BUFSIZ@).
+-s BLOCK_SIZE    Set block size to *BLOCK_SIZE*.
+                 The default is the filesystem block size.
 
 See also
 --------
