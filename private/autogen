@@ -1,4 +1,6 @@
 #!/bin/sh
 set -e -u -x
 mkdir -p m4
-exec autoreconf -vfi -I m4
+${ACLOCAL:-aclocal} -I m4 --install
+${AUTOHEADER:-autoheader}
+${AUTOCONF:-autoconf}
