@@ -21,7 +21,6 @@ dnl | SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 AC_PREREQ([2.61])
 AC_INIT([hungrycat], [0.4], [jwilk@jwilk.net])
-AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADER([config.h])
 
 AC_PROG_CC_C99
