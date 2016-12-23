@@ -49,6 +49,7 @@ cd "$sourceroot"/*
 rm .git*
 rm .travis.yml
 rm README.rst  # shipped as doc/README
+mv LICENSE doc/
 rm private/build-source-tarball
 private/autogen
 rm -r *.cache
