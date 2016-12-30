@@ -15,6 +15,6 @@ script:
 - ./configure
 - make
 - make test
-- find -name "*.rst" | xargs -L1 -t -I{} rst2xml --strict {} /dev/null
+- private/check-rst
 
 # vim:ts=2 sts=2 sw=2 et
