@@ -8,8 +8,10 @@ addons:
     - autoconf
     - autoconf-archive
     - automake
-    - python-docutils
     - python-nose
+install:
+- pip install --user docutils pygments
+- export PATH="$HOME/.local/bin:$PATH"
 script:
 - ./private/autogen
 - ./configure
