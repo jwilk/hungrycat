@@ -9,7 +9,9 @@ It can be useful if you need to process a large file, but:
 - you don't have enough space to store the output file and
 - you wouldn't need the input file afterwards.
 
-Example::
+Example:
+
+.. code:: console
 
    $ md5sum bigfile
    d9b18676a36c919c1688cba61a2cf0f1  bigfile
