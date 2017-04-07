@@ -1,7 +1,8 @@
 hungrycat: cat & rm in a single tool
 ====================================
 
-*hungrycat* is a tool that prints contents of a file on the standard output,
+**hungrycat** is a tool that prints contents of a file
+on the standard output,
 while simultaneously freeing disk space occupied by the file.
 
 It can be useful if you need to process a large file, but:
