@@ -11,7 +11,7 @@ It can be useful if you need to process a large file, but:
 - you wouldn't need the input file afterwards.
 
 Example
--------
+=======
 
 .. code:: console
 
