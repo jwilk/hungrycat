@@ -11,11 +11,10 @@ addons:
     - autoconf-archive
     - automake
     - python-nose
-before_install:
+    - python-docutils
+    - python-pygments
+before_script:
 - export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
-install:
-- pip install --user docutils pygments
-- export PATH="$HOME/.local/bin:$PATH"
 script:
 - ./private/autogen
 - ./configure
