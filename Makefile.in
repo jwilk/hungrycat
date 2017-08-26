@@ -50,11 +50,13 @@ distclean: clean
 
 .PHONY: install
 install: hungrycat
-	install -D -m755 $(<) $(DESTDIR)$(bindir)/hungrycat
+	install -d $(DESTDIR)$(bindir)
+	install -m755 $(<) $(DESTDIR)$(bindir)/hungrycat
 ifeq "$(wildcard .git doc/hungrycat.1)" ".git"
 	# run "make -C doc" to build the manpage
 else
-	install -D -m644 $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
+	install -d $(DESTDIR)$(mandir)/man1/
+	install -m644 $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
 endif
 
 hungrycat: hungrycat.o
