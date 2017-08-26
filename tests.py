@@ -41,7 +41,7 @@ if sys.version_info >= (3,):
         )
 else:
     null_byte = '\0'
-    range = xrange
+    range = xrange  # pylint: disable=redefined-builtin
     def random_string(size):
         return ''.join(
             chr(random.randint(0, 0xff))
