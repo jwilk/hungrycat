@@ -55,7 +55,9 @@ clean-doc:
 	rm -f $(manpage)
 
 %.1: %.rst
-	@RST2MAN@ $(<) $(@)
+	@RST2MAN@ $(<) $(@).tmp
+	sed -i -e '/^[.][\]" vim:/d' $(@).tmp
+	mv $(@).tmp $(@)
 
 endif
 
