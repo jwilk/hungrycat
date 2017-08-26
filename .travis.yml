@@ -10,8 +10,8 @@ addons:
     - autoconf
     - autoconf-archive
     - automake
-    - python-nose
     - python-docutils
+    - python-nose
     - python-pygments
 before_script:
 - export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
