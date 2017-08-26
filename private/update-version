@@ -2,5 +2,5 @@
 version=${1:?"no version number provided"}
 set -e -x
 dch -m -v "$version" -u low -c doc/changelog
-sed -i -E -e "s/(AC_INIT[(]\[hungrycat\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
+sed -i -E -e "s/(AC_INIT[(]\[\S+\],) \[[0-9.]+\]/\1 [$version]/" configure.ac
 sed -i -E -e "s/^(:version: \S+) \S+$/\1 $version/" doc/manpage.rst
