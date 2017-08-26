@@ -1,4 +1,4 @@
-# Copyright © 2009-2017 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2014-2017 Jakub Wilk <jwilk@jwilk.net>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -18,46 +18,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-CC = @CC@
-CFLAGS = @CFLAGS@
-CPPFALGS = @CPPFLAGS@
-LDFLAGS = @LDFLAGS@
+export LC_ALL=C
 
-RST2MAN = @RST2MAN@
-
-prefix = @prefix@
-exec_prefix = @exec_prefix@
-bindir = @bindir@
-datarootdir = @datarootdir@
-mandir = @mandir@
+rst2man = $(or $(shell which rst2man),rst2man.py)
+exe = hungrycat
 
 .PHONY: all
-all: hungrycat
+all: $(exe).1
 
-.PHONY: test
-test: hungrycat
-	python tests.py
+$(exe).1: manpage.rst
+	$(rst2man) < $(<) > $(@).tmp
+	sed -i -e "s/\([a-z]\)\\\\(aq\([a-z]\)/\1'\2/g" $(@).tmp  # prefer ' to \(aq when used as an apostrophe
+	sed -i -e '/^[.][\]" vim:/d' $(@).tmp
+	mv $(@).tmp $(@)
 
 .PHONY: clean
 clean:
-	rm -f hungrycat hungrycat.o
-	rm -rf *.py[co] __pycache__
-
-.PHONY: distclean
-distclean: clean
-	rm -f config.log config.status
-	find . -name '*.in' | sed -e 's/[.]in$$//' | xargs -t rm -f
-
-.PHONY: install
-install: hungrycat
-	install -D -m755 $(<) $(DESTDIR)$(bindir)/hungrycat
-ifeq "$(wildcard .git doc/hungrycat.1)" ".git"
-	# run "make -C doc" to build the manpage
-else
-	install -D -m644 $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
-endif
-
-hungrycat: hungrycat.o
-hungrycat.o: hungrycat.c config.h
+	rm -f $(exe).1
 
 # vim:ts=4 sts=4 sw=4 noet

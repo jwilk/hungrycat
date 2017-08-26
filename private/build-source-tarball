@@ -51,6 +51,7 @@ rm .travis.yml
 rm private/build-source-tarball
 rm README  # shipped as doc/README
 mv LICENSE doc/
+make -C doc/
 private/autogen
 rm -r *.cache
 cd ..
