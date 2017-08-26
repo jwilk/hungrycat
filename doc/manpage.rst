@@ -5,8 +5,8 @@ hungrycat
 cat & rm in a single tool
 =========================
 
-:Date: 2013-01-26
-:Manual section: 1
+:date: 2013-01-26
+:manual section: 1
 
 Synoposis
 ---------
