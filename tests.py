@@ -37,14 +37,12 @@ from nose.tools import (
 b = b''  # Python >= 2.6 is required
 
 if sys.version_info >= (3,):
-    null_byte = bytes([0])
     def random_string(size):
         return bytes(
             random.randint(0, 0xff)
             for i in range(0, size)
         )
 else:
-    null_byte = '\0'
     range = xrange
     def random_string(size):
         return ''.join(
@@ -147,14 +145,14 @@ def test_standard_force_fallocate():
 def test_sparse_fallocate():
     fd, input_file = mkstemp()
     os.lseek(fd, 19999, os.SEEK_SET)
-    os.write(fd, null_byte)
+    os.write(fd, b'\0')
     os.close(fd)
     output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], input_file)
     if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
     assert_equal(errors, [])
     assert_equal(rc, 0)
-    assert_equal(output, null_byte * 20000)
+    assert_equal(output, b'\0' * 20000)
 
 here = os.path.dirname(__file__)
 
