@@ -2,8 +2,9 @@ hungrycat (0.4) UNRELEASED; urgency=low
 
   * Use fstatvfs(2) to determine the default block size (instead of using
     BUFSIZE, which was always a dubious guess).
+  * Fix compatiblity with non-GNU install(1) programs.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 13 Mar 2016 18:38:52 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Sat, 26 Aug 2017 23:56:30 +0200
 
 hungrycat (0.3.3) unstable; urgency=low
 
