@@ -45,3 +45,5 @@ Options
 See also
 --------
 **cat**\(1), **rm**\(1), **truncate**\(1)
+
+.. vim:ts=3 sts=3 sw=3
