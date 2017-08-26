@@ -20,8 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import io
 import os
 import random
+import re
 import subprocess as ipc
 import sys
 import tempfile
@@ -151,6 +153,32 @@ def test_sparse_fallocate():
     assert_equal(errors, [])
     assert_equal(rc, 0)
     assert_equal(output, null_byte * 20000)
+
+here = os.path.dirname(__file__)
+
+def test_versions():
+    path = os.path.join(here, 'doc', 'changelog')
+    with io.open(path, 'rt', encoding='UTF-8') as file:
+        line = file.readline()
+    changelog_version = line.split()[1].strip('()')
+    configure_ac_version = None
+    path = os.path.join(here, 'configure.ac')
+    with io.open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            match = re.match(r'^AC_INIT[(].*\[([0-9.]+)\]', line)
+            if match is not None:
+                configure_ac_version = match.group(1)
+                break
+    assert_equal(configure_ac_version, changelog_version)
+    manpage_version = None
+    path = os.path.join(here, 'doc', 'manpage.rst')
+    with io.open(path, 'rt', encoding='UTF-8') as file:
+        for line in file:
+            match = re.match(r'^:version: \S+ ([0-9.]+)$', line)
+            if match is not None:
+                manpage_version = match.group(1)
+                break
+    assert_equal(manpage_version, changelog_version)
 
 if __name__ == '__main__':
     nose.main()
