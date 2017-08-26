@@ -34,6 +34,8 @@ from nose.tools import (
     assert_false,
 )
 
+b = b''  # Python >= 2.6 is required
+
 if sys.version_info >= (3,):
     null_byte = bytes([0])
     def random_string(size):
