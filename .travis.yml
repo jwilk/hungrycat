@@ -25,6 +25,7 @@ script:
 - ./configure
 - make
 - make test
+- make -C doc
 - private/check-rst
 - python -m pydiatra *.py
 - python -m pyflakes *.py
