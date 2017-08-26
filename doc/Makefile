@@ -28,8 +28,8 @@ all: $(exe).1
 
 $(exe).1: manpage.rst
 	$(rst2man) < $(<) > $(@).tmp
-	sed -i -e "s/\([a-z]\)\\\\(aq\([a-z]\)/\1'\2/g" $(@).tmp  # prefer ' to \(aq when used as an apostrophe
-	sed -i -e '/^[.][\]" vim:/d' $(@).tmp
+	perl -pi -e 's/([a-z])\\[(]aq([a-z])/$$1\x27$$2/g' $(@).tmp  # prefer ' to \(aq when used as an apostrophe
+	perl -pi -e '/^[.]\\" vim:/d' $(@).tmp
 	mv $(@).tmp $(@)
 
 .PHONY: clean
