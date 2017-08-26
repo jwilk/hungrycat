@@ -12,14 +12,22 @@ addons:
     - automake
     - python-docutils
     - python-nose
+    - python-pip
     - python-pygments
-before_script:
+before_install:
 - export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
+install:
+- pip install --user pydiatra
+- pip install --user pyflakes
+- pip install --user pylint
 script:
 - ./private/autogen
 - ./configure
 - make
 - make test
 - private/check-rst
+- python -m pydiatra *.py
+- python -m pyflakes *.py
+- python -m pylint *.py
 
 # vim:ts=2 sts=2 sw=2 et
