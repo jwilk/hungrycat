@@ -3,6 +3,7 @@ disable =
     invalid-name,
     locally-disabled,
     missing-docstring,
+    redefined-builtin,
 
 [REPORTS]
 reports = no
