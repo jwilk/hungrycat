@@ -47,9 +47,7 @@ static void show_usage(int verbose)
   fprintf(stderr,
     "Usage: %s "
     "[-f] "
-#if HAVE_FALLOC_FL_PUNCH_HOLE
     "[-P] "
-#endif
     "[-s BLOCK_SIZE] FILE...\n\n",
     argv0
   );
@@ -142,21 +140,6 @@ static int eat(const char *filename)
   }
 
   struct stat stat;
-#if HAVE_FALLOC_FL_PUNCH_HOLE
-  if (opt_punch)
-  {
-    /* A hole at the beginning of the file could cause false positive “buffer
-     * size too small” condition. */
-    char charbuf;
-    r_bytes = pread(fd, &charbuf, 1, 0);
-    check_io(r_bytes, 1);
-    if (charbuf == 0)
-    {
-      w_bytes = pwrite(fd, &charbuf, 1, 0);
-      check_io(w_bytes, 1);
-    }
-  }
-#endif
   rc = fstat(fd, &stat);
   fail_if(rc == -1);
   if (stat.st_nlink > 1 && !opt_force)
