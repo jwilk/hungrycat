@@ -48,9 +48,9 @@ git archive "$commit" --prefix="$name-$version/" | tar -C "$sourceroot" -xf -
 cd "$sourceroot"/*
 rm .git*
 rm .travis.yml
+rm private/build-source-tarball
 rm README  # shipped as doc/README
 mv LICENSE doc/
-rm private/build-source-tarball
 private/autogen
 rm -r *.cache
 cd ..
