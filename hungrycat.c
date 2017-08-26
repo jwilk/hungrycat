@@ -154,9 +154,9 @@ static int eat(const char *filename)
     check_io(r_bytes, block_size);
     w_bytes = write(STDOUT_FILENO, buffer, block_size);
     check_io(w_bytes, block_size);
-#if HAVE_FALLOC_FL_PUNCH_HOLE
     if (i == 0 && opt_punch)
     {
+#if HAVE_FALLOC_FL_PUNCH_HOLE
       rc = fallocate(fd, FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE, offset, block_size);
       if (rc == 0)
       {
@@ -176,6 +176,9 @@ static int eat(const char *filename)
         goto done;
       }
       else
+#else
+      errno = ENOTSUP;
+#endif
       {
         show_error(filename);
         if (opt_punch > 1)
@@ -188,7 +191,6 @@ static int eat(const char *filename)
           fprintf(stderr, "hungrycat: %s: fallocate() failed; falling back to ftruncate()\n", filename);
       }
     }
-#endif
     offset = (n_blocks - i - 1) * block_size;
     r_bytes = pread(fd, buffer, block_size, offset);
     check_io(r_bytes, (i == 0 ? tail_size : block_size));
@@ -243,12 +245,7 @@ int main(int argc, char **argv)
   argv0 = argv[0];
 
   char opt;
-#if HAVE_FALLOC_FL_PUNCH_HOLE
-  #define punch_opt "P"
-#else
-  #define punch_opt ""
-#endif
-  while ((opt = getopt(argc, argv, "fs:" punch_opt)) != -1)
+  while ((opt = getopt(argc, argv, "fs:P")) != -1)
   {
     switch (opt)
     {
