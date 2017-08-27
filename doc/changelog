@@ -10,8 +10,10 @@ hungrycat (0.4) unstable; urgency=low
     BUFSIZE, which was always a dubious guess).
   * Make the -P option available even on systems that lack the fallocate(2)
     function.
+  * Include version number in the manual page.
   * Ship pre-built manual page.
   * Fix compatibility with non-GNU install(1) programs.
+  * Add separate license file.
   * Improve the test suite.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Aug 2017 13:52:45 +0200
