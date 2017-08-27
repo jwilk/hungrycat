@@ -24,7 +24,7 @@ import io
 import os
 import random
 import re
-import subprocess as ipc
+import subprocess
 import sys
 import tempfile
 
@@ -56,10 +56,10 @@ def mkstemp():
     return tempfile.mkstemp(prefix='hungrycat.', suffix='.tmp')
 
 def run_hungrycat_with_file(options, input_file):
-    child = ipc.Popen(
+    child = subprocess.Popen(
         ['./hungrycat'] + [str(o) for o in options] + [input_file],
-        stdout=ipc.PIPE,
-        stderr=ipc.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
     output = child.stdout.read()
     errors = child.stderr.read().splitlines()
