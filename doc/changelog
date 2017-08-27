@@ -2,8 +2,8 @@ hungrycat (0.4) UNRELEASED; urgency=low
 
   * Use fstatvfs(2) to determine the default block size (instead of using
     BUFSIZE, which was always a dubious guess).
-  * Make the -P option available even on systems that lack the fallocate()
-    functions.
+  * Make the -P option available even on systems that lack the fallocate(2)
+    function.
   * Fix compatibility with non-GNU install(1) programs.
 
  -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Aug 2017 00:28:11 +0200
