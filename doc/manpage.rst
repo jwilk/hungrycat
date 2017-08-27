@@ -9,8 +9,8 @@ cat & rm in a single tool
 :version: hungrycat 0.4
 :manual section: 1
 
-Synoposis
----------
+Synopsis
+--------
 
 **hungrycat** [-f] [-P] [-s *BLOCK_SIZE*] *FILE*...
 
