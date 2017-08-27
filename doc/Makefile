@@ -27,7 +27,7 @@ exe = hungrycat
 all: $(exe).1
 
 $(exe).1: manpage.rst
-	$(rst2man) --input-encoding=UTF-8:strict < $(<) > $(@).tmp
+	$(rst2man) --input-encoding=UTF-8 < $(<) > $(@).tmp
 	perl -pi -e 's/([a-z])\\[(]aq([a-z])/$$1\x27$$2/g' $(@).tmp  # prefer ' to \(aq when used as an apostrophe
 	perl -pi -e '/^[.]\\" vim:/d' $(@).tmp
 	mv $(@).tmp $(@)
