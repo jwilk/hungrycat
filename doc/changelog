@@ -1,8 +1,9 @@
 hungrycat (0.4.1) UNRELEASED; urgency=low
 
-  * 
+  * Improve the build system:
+    + Honour CFLAGS (etc.) when linking.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Sun, 27 Aug 2017 14:05:28 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Sep 2017 22:55:13 +0200
 
 hungrycat (0.4) unstable; urgency=low
 
