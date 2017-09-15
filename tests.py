@@ -39,14 +39,14 @@ b = b''  # Python >= 2.6 is required
 if sys.version_info >= (3,):
     def random_string(size):
         return bytes(
-            random.randint(0, 0xff)
+            random.randint(0, 0xFF)
             for i in range(0, size)
         )
 else:
     range = xrange
     def random_string(size):
         return ''.join(
-            chr(random.randint(0, 0xff))
+            chr(random.randint(0, 0xFF))
             for i in range(0, size)
         )
 
