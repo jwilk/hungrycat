@@ -1,9 +1,10 @@
 hungrycat (0.4.1) UNRELEASED; urgency=low
 
+  * Fix command-line parsing on architecture where “char” is unsigned.
   * Improve the build system:
     + Honour CFLAGS (etc.) when linking.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Sep 2017 22:55:13 +0200
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 05 Oct 2017 20:17:00 +0200
 
 hungrycat (0.4) unstable; urgency=low
 
