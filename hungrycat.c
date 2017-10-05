@@ -244,7 +244,7 @@ int main(int argc, char **argv)
 {
   argv0 = argv[0];
 
-  char opt;
+  int opt;
   while ((opt = getopt(argc, argv, "fs:P")) != -1)
   {
     switch (opt)
