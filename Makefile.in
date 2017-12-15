@@ -56,7 +56,7 @@ ifeq "$(wildcard .git doc/hungrycat.1)" ".git"
 	# run "$(MAKE) -C doc" to build the manpage
 else
 	install -d $(DESTDIR)$(mandir)/man1/
-	install -m644 $(<) $(DESTDIR)$(mandir)/man1/hungrycat.1
+	install -m644 doc/$(<).1 $(DESTDIR)$(mandir)/man1/hungrycat.1
 endif
 
 hungrycat: hungrycat.o
