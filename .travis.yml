@@ -22,10 +22,13 @@ install:
 - pip install --user pylint
 script:
 - ./private/autogen
-- ./configure
+- ./configure --prefix ~/.local
 - make
 - make test
 - make -C doc
+- make install
+- PATH=~/.local/bin hungrycat || [ $? -eq 1 ]
+- MANPATH=~/.local/share/man MANWIDTH=80 man 1 hungrycat | grep -C 999 -w HUNGRYCAT
 - private/check-rst
 - python -m pydiatra *.py
 - python -m pyflakes *.py
