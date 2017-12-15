@@ -7,6 +7,7 @@ hungrycat (0.4.1) UNRELEASED; urgency=low
 
   [ Tobias Geerinckx-Rice ]
   * Makefile: don't install the binary as man page.
+    https://github.com/jwilk/hungrycat/pull/1
 
  -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Dec 2017 16:11:51 +0100
 
