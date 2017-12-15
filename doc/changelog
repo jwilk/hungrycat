@@ -1,10 +1,14 @@
 hungrycat (0.4.1) UNRELEASED; urgency=low
 
+  [ Jakub Wilk ]
   * Fix command-line parsing on architecture where “char” is unsigned.
   * Improve the build system:
     + Honour CFLAGS (etc.) when linking.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 05 Oct 2017 20:17:00 +0200
+  [ Tobias Geerinckx-Rice ]
+  * Makefile: don't install the binary as man page.
+
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Dec 2017 16:11:51 +0100
 
 hungrycat (0.4) unstable; urgency=low
 
