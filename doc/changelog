@@ -1,4 +1,4 @@
-hungrycat (0.4.1) UNRELEASED; urgency=low
+hungrycat (0.4.1) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Fix command-line parsing on architecture where “char” is unsigned.
@@ -9,7 +9,7 @@ hungrycat (0.4.1) UNRELEASED; urgency=low
   * Makefile: don't install the binary as man page.
     https://github.com/jwilk/hungrycat/pull/1
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Dec 2017 16:11:51 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 15 Dec 2017 18:45:20 +0100
 
 hungrycat (0.4) unstable; urgency=low
 
