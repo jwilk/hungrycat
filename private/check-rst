@@ -20,15 +20,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-here=$(dirname "$0")
+here=${0%/*}
+here=${here#./}
+root="$here/../"
+root=${root#private/../}
+[ -n "$root" ] || root=.
 rst2xml=$(command -v rst2xml) \
 || rst2xml=$(command -v rst2xml.py) \
 || { printf 'rst2xml not found\n' >&2; exit 1; }
 options='--input-encoding=UTF-8 --output-encoding=UTF-8 --strict'
 if [ $# -eq 0 ]
 then
-    find "$here/.." -name '*.rst'
-    grep -rwl 'ft[=]rst' "$here/.."
+    find "$root" -name '*.rst'
+    grep -rwl 'ft[=]rst' "$root"
 else
     printf '%s\n' "$@"
 fi |
