@@ -25,13 +25,14 @@ script:
 - ./configure --prefix ~/.local
 - make
 - make test
-- make -C doc
-- make install
-- hungrycat || [ $? -eq 1 ]
-- MANPATH=~/.local/share/man MANWIDTH=80 man 1 hungrycat | grep -C 999 -w HUNGRYCAT
 - private/check-rst
 - python -m pydiatra *.py
 - python -m pyflakes *.py
 - python -m pylint *.py
+- make -C doc
+- make install
+- cd /
+- hungrycat || [ $? -eq 1 ]
+- MANPATH=~/.local/share/man MANWIDTH=80 man 1 hungrycat | grep -C 999 -w HUNGRYCAT
 
 # vim:ts=2 sts=2 sw=2 et
