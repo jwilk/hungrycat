@@ -13,8 +13,7 @@ addons:
     - automake
 install:
 - pip install --user nose
-- pip install --user pydiatra
-- pip install --user pyflakes
+- pip install --user pydiatra pyflakes
 - pip install --user pylint
 - pip install --user docutils pygments
 script:
