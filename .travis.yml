@@ -12,7 +12,6 @@ addons:
     - autoconf-archive
     - automake
     - python-nose
-    - python-pip
 before_install:
 - export PATH=$(echo "$PATH" | tr ':' '\n' | sed -e '/\/opt\/python/d' | tr '\n' ':' | sed 's/::/:/g')
 install:
