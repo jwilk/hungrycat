@@ -66,9 +66,8 @@ def run_hungrycat_with_file(options, input_file):
     rc = child.wait()
     if rc == 0:
         assert_false(os.path.exists(input_file))
-    else:
-        if os.path.exists(input_file):
-            os.unlink(input_file)
+    elif os.path.exists(input_file):
+        os.unlink(input_file)
     return output, errors, rc
 
 def run_hungrycat(options, input_):
