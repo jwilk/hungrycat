@@ -61,7 +61,7 @@ endif
 hungrycat: hungrycat.o
 	$(LINK.c) $(^) $(LDLIBS) -o $(@)
 
-hungrycat.o: hungrycat.c config.h
+hungrycat.o: hungrycat.c autoconf.h
 
 .error = GNU make is required
 

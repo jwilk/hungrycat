@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-#include "config.h"
+#include "autoconf.h"
 
 #include <assert.h>
 #include <errno.h>
