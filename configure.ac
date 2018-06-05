@@ -24,7 +24,6 @@ AC_INIT([hungrycat], [0.4.1], [jwilk@jwilk.net])
 AC_CONFIG_HEADER([config.h])
 
 AC_PROG_CC_C99
-AX_CFLAGS_WARN_ALL
 AC_PROG_CPP
 
 AC_MSG_CHECKING([for FALLOC_FL_PUNCH_HOLE])
