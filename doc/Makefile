@@ -29,7 +29,7 @@ all: $(exe).1
 $(exe).1: manpage.rst
 	$(rst2man) --input-encoding=UTF-8 < $(<) > $(@).tmp
 	perl -pi -e 's/([a-z])\\[(]aq([a-z])/$$1\x27$$2/g' $(@).tmp  # prefer ' to \(aq when used as an apostrophe
-	perl -ni -e 'print unless /^[.]\\" vim:/' $(@).tmp
+	perl -ni -e 'print unless $$. > 1 and /^[.]\\"/' $(@).tmp
 	mv $(@).tmp $(@)
 
 .PHONY: clean
