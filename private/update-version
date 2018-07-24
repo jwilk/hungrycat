@@ -3,5 +3,5 @@ version=${1:?"no version number provided"}
 set -e -x
 dch -m -v "$version" -u low -c doc/changelog
 export version
-perl -pi -e 's/(AC_INIT[(]\[\S+\],) \[[0-9.]+\]/\1 [$ENV{version}]/' configure.ac
-perl -pi -e 's/^(:version: \S+) \S+$/\1 $ENV{version}/' doc/manpage.rst
+perl -pi -e 's/AC_INIT[(]\[\S+\], \[\K[0-9.]+/$ENV{version}/' configure.ac
+perl -pi -e 's/^:version: \S+ \K\S+$/$ENV{version}/' doc/manpage.rst
