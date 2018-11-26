@@ -70,19 +70,19 @@ def run_hungrycat_with_file(options, input_file):
         os.unlink(input_file)
     return output, errors, rc
 
-def run_hungrycat(options, input_):
+def run_hungrycat(options, data):
     fd, input_file = mkstemp()
-    os.write(fd, input_)
+    os.write(fd, data)
     os.close(fd)
     return run_hungrycat_with_file(options, input_file)
 
 def _standard_test_ftruncate(size, block_size):
-    input_ = random_blob[:size]
-    output, errors, rc = run_hungrycat(['-s', block_size], input_)
-    assert_equal(len(output), len(input_))
+    data = random_blob[:size]
+    output, errors, rc = run_hungrycat(['-s', block_size], data)
+    assert_equal(len(output), len(data))
     assert_equal(errors, [])
     assert_equal(rc, 0)
-    assert_equal(output, input_)
+    assert_equal(output, data)
 
 def _errors_operation_not_supported(errors, fallback):
     try:
@@ -95,24 +95,24 @@ def _errors_operation_not_supported(errors, fallback):
     )
 
 def _standard_test_fallocate(size, block_size):
-    input_ = random_blob[:size]
-    output, errors, rc = run_hungrycat(['-s', block_size, '-P'], input_)
+    data = random_blob[:size]
+    output, errors, rc = run_hungrycat(['-s', block_size, '-P'], data)
     if _errors_operation_not_supported(errors, fallback=True):
         pass
     else:
         assert_equal(errors, [])
     assert_equal(rc, 0)
-    assert_equal(output, input_)
+    assert_equal(output, data)
 
 def _standard_test_force_fallocate(size, block_size):
-    input_ = random_blob[:size]
-    output, errors, rc = run_hungrycat(['-s', block_size, '-P', '-P'], input_)
+    data = random_blob[:size]
+    output, errors, rc = run_hungrycat(['-s', block_size, '-P', '-P'], data)
     if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
     else:
         assert_equal(errors, [])
     assert_equal(rc, 0)
-    assert_equal(output, input_)
+    assert_equal(output, data)
 
 def _standard_test(testfn, min_block_size=1):
     for block_size in range(1, 5):
