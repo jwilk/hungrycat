@@ -61,8 +61,8 @@ def run_hungrycat_with_file(options, input_file):
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
-    output = child.stdout.read()
-    errors = child.stderr.read().splitlines()
+    (output, errors) = child.communicate()
+    errors = errors.splitlines()
     rc = child.wait()
     if rc == 0:
         assert_false(os.path.exists(input_file))
