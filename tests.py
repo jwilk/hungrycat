@@ -151,8 +151,7 @@ def test_standard_force_fallocate():
 def test_sparse_fallocate():
     with mktemp() as path:
         with open(path, 'wb') as fp:
-            fp.seek(19999, os.SEEK_SET)
-            fp.write(b'\0')
+            fp.truncate(20000)
         output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], path)
         if _errors_operation_not_supported(errors, fallback=False):
             raise nose.SkipTest
