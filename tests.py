@@ -62,9 +62,9 @@ def mktemp():
     finally:
         shutil.rmtree(tmpdir)
 
-def run_hungrycat_with_file(options, input_file):
+def run_hungrycat_with_file(options, path):
     child = subprocess.Popen(
-        ['./hungrycat'] + [str(o) for o in options] + [input_file],
+        ['./hungrycat'] + [str(o) for o in options] + [path],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -72,9 +72,9 @@ def run_hungrycat_with_file(options, input_file):
     errors = errors.splitlines()
     rc = child.wait()
     if rc == 0:
-        assert_false(os.path.exists(input_file))
-    elif os.path.exists(input_file):
-        os.unlink(input_file)
+        assert_false(os.path.exists(path))
+    elif os.path.exists(path):
+        os.unlink(path)
     return output, errors, rc
 
 def run_hungrycat(options, data):
