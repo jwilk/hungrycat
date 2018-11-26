@@ -20,10 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import contextlib
 import io
 import os
 import random
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -52,8 +54,13 @@ else:
 
 random_blob = random_string(1 << 17)
 
-def mkstemp():
-    return tempfile.mkstemp(prefix='hungrycat.', suffix='.tmp')
+@contextlib.contextmanager
+def mktemp():
+    tmpdir = tempfile.mkdtemp(prefix='hungrycat.', suffix='.tmp')
+    try:
+        yield tmpdir + '/file'
+    finally:
+        shutil.rmtree(tmpdir)
 
 def run_hungrycat_with_file(options, input_file):
     child = subprocess.Popen(
@@ -71,10 +78,10 @@ def run_hungrycat_with_file(options, input_file):
     return output, errors, rc
 
 def run_hungrycat(options, data):
-    fd, input_file = mkstemp()
-    os.write(fd, data)
-    os.close(fd)
-    return run_hungrycat_with_file(options, input_file)
+    with mktemp() as path:
+        with open(path, 'wb') as fp:
+            fp.write(data)
+        return run_hungrycat_with_file(options, path)
 
 def _standard_test_ftruncate(size, block_size):
     data = random_blob[:size]
@@ -142,16 +149,16 @@ def test_standard_force_fallocate():
         yield item
 
 def test_sparse_fallocate():
-    fd, input_file = mkstemp()
-    os.lseek(fd, 19999, os.SEEK_SET)
-    os.write(fd, b'\0')
-    os.close(fd)
-    output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], input_file)
-    if _errors_operation_not_supported(errors, fallback=False):
-        raise nose.SkipTest
-    assert_equal(errors, [])
-    assert_equal(rc, 0)
-    assert_equal(output, b'\0' * 20000)
+    with mktemp() as path:
+        with open(path, 'wb') as fp:
+            fp.seek(19999, os.SEEK_SET)
+            fp.write(b'\0')
+        output, errors, rc = run_hungrycat_with_file(['-P', '-P', '-s', 8192], path)
+        if _errors_operation_not_supported(errors, fallback=False):
+            raise nose.SkipTest
+        assert_equal(errors, [])
+        assert_equal(rc, 0)
+        assert_equal(output, b'\0' * 20000)
 
 here = os.path.dirname(__file__)
 
