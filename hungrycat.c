@@ -55,10 +55,10 @@ static void show_usage(int verbose)
   {
     fprintf(stderr,
       "Options:\n"
-      "  -f               force processing files with hardlinks\n"
-      "  -P               use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
-      "  -P -P            ... and do not fallback to ftruncate()\n"
-      "  -s BLOCK_SIZE    set block size to BLOCK_SIZE\n"
+      "  -f             force processing files with hardlinks\n"
+      "  -P             use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
+      "  -P -P          ... and do not fallback to ftruncate()\n"
+      "  -s BLOCK_SIZE  set block size to BLOCK_SIZE\n"
       "\n"
     );
   }
