@@ -116,8 +116,7 @@ def _standard_test_force_fallocate(size, block_size):
     output, errors, rc = run_hungrycat(['-s', block_size, '-P', '-P'], data)
     if _errors_operation_not_supported(errors, fallback=False):
         raise nose.SkipTest
-    else:
-        assert_equal(errors, [])
+    assert_equal(errors, [])
     assert_equal(rc, 0)
     assert_equal(output, data)
 
