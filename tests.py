@@ -45,7 +45,7 @@ if sys.version_info >= (3,):
             for i in range(0, size)
         )
 else:
-    range = xrange
+    range = xrange  # pylint: disable=undefined-variable
     def random_string(size):
         return ''.join(
             chr(random.randint(0, 0xFF))
