@@ -10,10 +10,8 @@ addons:
     - autoconf-archive
     - automake
     - cppcheck
+    - libipc-run-perl
 install:
-- pip install --user nose
-- pip install --user pydiatra pyflakes
-- pip install --user pylint
 - pip install --user docutils pygments
 script:
 - dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
@@ -23,9 +21,6 @@ script:
 - make
 - make test
 - private/check-rst
-- python -m pydiatra *.py
-- python -m pyflakes *.py
-- python -m pylint *.py
 - make -C doc
 - make install
 - cd /
