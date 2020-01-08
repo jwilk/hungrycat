@@ -37,6 +37,10 @@ all: hungrycat
 test: hungrycat
 	prove
 
+.PHONY: test-installed
+test-installed: $(or $(shell command -v hungrycat;),$(bindir)/hungrycat)
+	HUNGRYCAT_TEST_TARGET=hungrycat prove
+
 .PHONY: clean
 clean:
 	rm -f hungrycat hungrycat.o
