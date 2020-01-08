@@ -18,6 +18,7 @@ use Test::More tests => 2332;
 use IPC::Run ();
 
 my $pdir = "$FindBin::Bin/..";
+my $target = $ENV{HUNGRYCAT_TEST_TARGET} // "$pdir/hungrycat";
 
 sub random_string
 {
@@ -44,7 +45,7 @@ sub run_hungrycat_with_file
     my ($path, $options) = @_;
     my ($stdout, $stderr);
     my $proc = IPC::Run::start(
-        ["$pdir/hungrycat", @{$options}, $path],
+        ["$target", @{$options}, $path],
         '>', \$stdout,
         '2>', \$stderr,
     );
