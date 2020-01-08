@@ -6,10 +6,10 @@ compiler:
 addons:
   apt:
     packages:
-    - cppcheck
     - autoconf
     - autoconf-archive
     - automake
+    - cppcheck
 install:
 - pip install --user nose
 - pip install --user pydiatra pyflakes
