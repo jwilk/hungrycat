@@ -1,4 +1,4 @@
-dnl | Copyright © 2012-2018 Jakub Wilk <jwilk@jwilk.net>
+dnl | Copyright © 2012-2020 Jakub Wilk <jwilk@jwilk.net>
 dnl |
 dnl | Permission is hereby granted, free of charge, to any person obtaining a
 dnl | copy of this software and associated documentation files (the
