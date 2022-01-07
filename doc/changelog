@@ -1,8 +1,8 @@
 hungrycat (0.4.2) UNRELEASED; urgency=low
 
-  * 
+  * Add -h, --help.
 
- -- Jakub Wilk <jwilk@jwilk.net>  Wed, 08 Jan 2020 21:43:24 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jan 2022 08:22:00 +0100
 
 hungrycat (0.4.1) unstable; urgency=low
 
