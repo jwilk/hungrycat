@@ -27,6 +27,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/statvfs.h>
 #include <unistd.h>
@@ -42,23 +43,24 @@ static const char *argv0;
 static int opt_force = 0;
 static int opt_punch = 0;
 
-static void show_usage(int verbose)
+static void show_usage(FILE *fp)
 {
-  fprintf(stderr,
+  fprintf(fp,
     "Usage: hungrycat "
     "[-f] "
     "[-P] "
-    "[-s BLOCK_SIZE] FILE...\n\n"
+    "[-s BLOCK_SIZE] FILE...\n"
   );
-  if (verbose)
+  if (fp == stdout)
   {
-    fprintf(stderr,
+    fprintf(fp,
+      "\n"
       "Options:\n"
       "  -f             force processing files with hardlinks\n"
       "  -P             use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
       "  -P -P          ... and do not fallback to ftruncate()\n"
       "  -s BLOCK_SIZE  set block size to BLOCK_SIZE\n"
-      "\n"
+      "  -h, --help     display this help and exit\n"
     );
   }
   return;
@@ -244,7 +246,7 @@ int main(int argc, char **argv)
   argv0 = argv[0];
 
   int opt;
-  while ((opt = getopt(argc, argv, "fs:P")) != -1)
+  while ((opt = getopt(argc, argv, "fs:Ph-:")) != -1)
   {
     switch (opt)
     {
@@ -266,7 +268,7 @@ int main(int argc, char **argv)
         if (errno != 0)
         {
           show_error(NULL);
-          show_usage(0);
+          show_usage(stderr);
           return EXIT_FAILURE;
         }
         block_size = (size_t) value;
@@ -275,14 +277,23 @@ int main(int argc, char **argv)
       case 'P':
         opt_punch++;
         break;
+      case 'h':
+        show_usage(stdout);
+        return EXIT_SUCCESS;
+      case '-':
+        if (strcmp(optarg, "help") == 0) {
+          show_usage(stdout);
+          return EXIT_SUCCESS;
+        }
+        /* fall through */
       default:
-        show_usage(0);
+        show_usage(stderr);
         return EXIT_FAILURE;
     }
   }
   if (optind >= argc)
   {
-    show_usage(1);
+    show_usage(stderr);
     return EXIT_FAILURE;
   }
   buffer = malloc(block_size);
