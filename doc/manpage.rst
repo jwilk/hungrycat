@@ -44,6 +44,10 @@ Options
    Set block size to *BLOCK_SIZE*.
    The default is the filesystem block size.
 
+-h, --help
+
+   Show help message and exit.
+
 See also
 --------
 **cat**\(1), **rm**\(1), **truncate**\(1)
