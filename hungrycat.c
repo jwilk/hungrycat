@@ -45,11 +45,10 @@ static int opt_punch = 0;
 static void show_usage(int verbose)
 {
   fprintf(stderr,
-    "Usage: %s "
+    "Usage: hungrycat "
     "[-f] "
     "[-P] "
-    "[-s BLOCK_SIZE] FILE...\n\n",
-    argv0
+    "[-s BLOCK_SIZE] FILE...\n\n"
   );
   if (verbose)
   {
