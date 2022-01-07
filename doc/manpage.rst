@@ -5,7 +5,7 @@ hungrycat
 cat & rm in a single tool
 =========================
 
-:date: 2017-08-26
+:date: 2022-01-07
 :version: hungrycat 0.4.2
 :manual section: 1
 
