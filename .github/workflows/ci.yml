@@ -16,14 +16,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: check changelog syntax
+      if: matrix.cc == 'gcc'
       run: |
         dpkg-parsechangelog -ldoc/changelog --all 2>&1 >/dev/null | { ! grep .; }
     - name: check reST syntax
+      if: matrix.cc == 'gcc'
       run: |
         pip install --user docutils pygments
         private/check-rst
     - name: build the man page
       run: |
+        pip install --user docutils
         make -C doc
     - name: run cppcheck
       run: |
