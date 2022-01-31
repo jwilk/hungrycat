@@ -42,7 +42,7 @@ jobs:
         ./private/autogen
     - name: configure
       run: |
-        ./configure --prefix ~/.local || cat config.log /fail
+        ./configure --prefix ~/.local CC=${{matrix.cc}} || cat config.log /fail
     - name: build
       run: |
         make
