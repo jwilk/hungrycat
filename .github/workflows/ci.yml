@@ -29,6 +29,7 @@ jobs:
         pip install --user docutils
         make -C doc
     - name: run cppcheck
+      if: matrix.cc == 'gcc'
       run: |
         sudo apt-get install cppcheck
         cppcheck --error-exitcode=1 *.c
