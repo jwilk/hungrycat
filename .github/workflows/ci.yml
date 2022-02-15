@@ -22,11 +22,11 @@ jobs:
     - name: check reST syntax
       if: matrix.cc == 'gcc'
       run: |
-        pip install --user docutils pygments
+        pip install docutils pygments
         private/check-rst
     - name: build the man page
       run: |
-        pip install --user docutils
+        pip install docutils
         make -C doc
     - name: run cppcheck
       if: matrix.cc == 'gcc'
