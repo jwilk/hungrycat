@@ -1,8 +1,21 @@
 hungrycat (0.4.2) UNRELEASED; urgency=low
 
   * Add -h, --help.
+  * Add --version.
+  * Improve the test suite:
+    + Port it from Python to Perl.
+    + Fix insecure use of /tmp.
+  * Improve the build system:
+    + Add bug tracker URL to the configure script.
+    + Add “test-installed” target.
+    + Add checks against BSD make.
+    + Use “command -v” instead of non-portable which(1).
+    + Simplify warning-enabling logic.
+    + Assume that the compiler support C99 out of the box.
+  * Use SPDX-License-Identifier (instead of complete license text in every
+    source file).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Fri, 07 Jan 2022 08:22:00 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Thu, 03 Mar 2022 18:33:22 +0100
 
 hungrycat (0.4.1) unstable; urgency=low
 
