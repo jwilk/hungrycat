@@ -48,6 +48,10 @@ Options
 
    Show help message and exit.
 
+--version
+
+   Show version information and exit.
+
 See also
 --------
 **cat**\(1), **rm**\(1), **truncate**\(1)

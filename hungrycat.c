@@ -44,6 +44,7 @@ static void show_usage(FILE *fp)
       "  -P -P          ... and do not fallback to ftruncate()\n"
       "  -s BLOCK_SIZE  set block size to BLOCK_SIZE\n"
       "  -h, --help     display this help and exit\n"
+      "  --version      show version information and exit\n"
     );
   }
   return;
@@ -266,6 +267,9 @@ int main(int argc, char **argv)
       case '-':
         if (strcmp(optarg, "help") == 0) {
           show_usage(stdout);
+          return EXIT_SUCCESS;
+        } else if (strcmp(optarg, "version") == 0) {
+          printf(PACKAGE_STRING "\n");
           return EXIT_SUCCESS;
         }
         /* fall through */
