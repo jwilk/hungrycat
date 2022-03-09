@@ -11,7 +11,7 @@ hungrycat (0.4.2) UNRELEASED; urgency=low
     + Add checks against BSD make.
     + Use “command -v” instead of non-portable which(1).
     + Simplify warning-enabling logic.
-    + Assume that the compiler support C99 out of the box.
+    + Assume that the compiler supports C99 out of the box.
   * Use SPDX-License-Identifier (instead of complete license text in every
     source file).
 
