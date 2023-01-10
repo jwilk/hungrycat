@@ -43,7 +43,7 @@ static void show_usage(FILE *fp)
       "  -P             use fallocate() with FALLOC_FL_PUNCH_HOLE\n"
       "  -P -P          ... and do not fallback to ftruncate()\n"
       "  -s BLOCK_SIZE  set block size to BLOCK_SIZE\n"
-      "  -h, --help     display this help and exit\n"
+      "  -h, --help     show this help message and exit\n"
       "  --version      show version information and exit\n"
     );
   }
