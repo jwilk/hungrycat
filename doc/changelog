@@ -15,7 +15,7 @@ hungrycat (0.4.2) UNRELEASED; urgency=low
   * Use SPDX-License-Identifier (instead of complete license text in every
     source file).
 
- -- Jakub Wilk <jwilk@jwilk.net>  Thu, 03 Mar 2022 18:33:22 +0100
+ -- Jakub Wilk <jwilk@jwilk.net>  Mon, 13 Feb 2023 13:35:17 +0100
 
 hungrycat (0.4.1) unstable; urgency=low
 
