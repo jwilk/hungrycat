@@ -1,6 +1,6 @@
 #!/bin/sh
 version=${1:?"no version number provided"}
-set -e -x
+set -e -u -x
 dch -m -v "$version" -u low -c doc/changelog
 export version
 perl -pi -e 's/^AC_INIT[(]\[\S+\], \[\K[0-9.]+/$ENV{version}/' configure.ac
