@@ -8,8 +8,7 @@ hungrycat (0.4.2) UNRELEASED; urgency=low
   * Improve the build system:
     + Add bug tracker URL to the configure script.
     + Add “test-installed” target.
-    + Add checks against BSD make.
-    + Use “command -v” instead of non-portable which(1).
+    + Add checks against BSD make. (Only GNU make is supported.)
     + Simplify warning-enabling logic.
     + Assume that the compiler supports C99 out of the box.
   * Use SPDX-License-Identifier (instead of complete license text in every
