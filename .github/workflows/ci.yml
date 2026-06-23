@@ -69,6 +69,6 @@ jobs:
         MANWIDTH: 80
       run: |
         cd /
-        man 1 hungrycat | grep -A 10 -w HUNGRYCAT
+        man 1 hungrycat | grep -A 10 -iw HUNGRYCAT
 
 # vim:ts=2 sts=2 sw=2 et
